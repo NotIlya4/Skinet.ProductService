@@ -1,0 +1,9 @@
+﻿services:
+  product-service:
+    build: .
+    container_name: product-service
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+    ports:
+      - 5001:80
