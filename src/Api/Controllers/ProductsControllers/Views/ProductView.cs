@@ -2,7 +2,7 @@
 
 namespace Api.Controllers.ProductsControllers.Views;
 
-public record ProductView
+public class ProductView
 {
     public required Guid Id { get; init; }
     [ProductName]

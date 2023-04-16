@@ -13,24 +13,24 @@ namespace Infrastructure.Repositories.ProductRepository;
 
 public class ProductRepository : IProductRepository
 {
-    private DataMapper Mapper { get; }
-    private ApplicationDbContext DbContext { get; }
+    private readonly DataMapper _mapper;
+    private readonly ApplicationDbContext _dbContext;
 
     public ProductRepository(ApplicationDbContext dbContext, DataMapper mapper)
     {
-        Mapper = mapper;
-        DbContext = dbContext;
+        _mapper = mapper;
+        _dbContext = dbContext;
     }
 
     public async Task<Product> GetProduct(ProductStrictFilter productStrictFilter)
     {
-        ProductData productData = await DbContext.GetProduct(productStrictFilter);
-        return Mapper.MapProduct(productData);
+        ProductData productData = await _dbContext.GetProduct(productStrictFilter);
+        return _mapper.MapProduct(productData);
     }
 
     public async Task<List<Product>> GetProducts(GetProductsQuery getProductsQuery)
     {
-        IQueryable<ProductData> query = DbContext
+        IQueryable<ProductData> query = _dbContext
             .Products
             .IncludeProductDependencies();
 
@@ -42,12 +42,12 @@ public class ProductRepository : IProductRepository
         List<ProductData> productDatas = await sortedQuery
             .ApplyPagination(getProductsQuery.Pagination)
             .ToListAsync();
-        return Mapper.MapProduct(productDatas);
+        return _mapper.MapProduct(productDatas);
     }
 
     public async Task<int> GetProductsCountForFilters(ProductFluentFilters fluentFilters)
     {
-        IQueryable<ProductData> query = DbContext
+        IQueryable<ProductData> query = _dbContext
             .Products
             .AsNoTracking()
             .IncludeProductDependencies();
@@ -61,17 +61,17 @@ public class ProductRepository : IProductRepository
     {
         if (fluentFilters.ProductTypeName is not null)
         {
-            query = query.Where(p => p.ProductType.Name.Equals(fluentFilters.ProductTypeName.Value.Value));
+            query = query.Where(p => p.ProductType.Name.Equals(fluentFilters.ProductTypeName.Value));
         }
         
         if (fluentFilters.BrandName is not null)
         {
-            query = query.Where(p => p.Brand.Name.Equals(fluentFilters.BrandName.Value.Value));
+            query = query.Where(p => p.Brand.Name.Equals(fluentFilters.BrandName.Value));
         }
 
         if (fluentFilters.Searching is not null)
         {
-            query = query.Where(p => p.Name.Contains(fluentFilters.Searching.Value.Value));
+            query = query.Where(p => p.Name.Contains(fluentFilters.Searching.Value));
         }
 
         return query;
@@ -79,31 +79,31 @@ public class ProductRepository : IProductRepository
 
     public async Task Insert(Product product)
     {
-        BrandData brandData = await DbContext.GetBrand(product.Brand);
-        ProductTypeData productTypeData = await DbContext.GetProductType(product.ProductType);
+        BrandData brandData = await _dbContext.GetBrand(product.Brand);
+        ProductTypeData productTypeData = await _dbContext.GetProductType(product.ProductType);
         
-        ProductData productData = Mapper.MapProduct(product, productTypeData, brandData);
+        ProductData productData = _mapper.MapProduct(product, productTypeData, brandData);
 
         SetProductEntry(productData);
 
-        await DbContext.Products.AddAsync(productData);
-        await DbContext.SaveChangesAsync();
+        await _dbContext.Products.AddAsync(productData);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task Delete(ProductStrictFilter productStrictFilter)
     {
-        ProductData productData = await DbContext.GetProduct(productStrictFilter);
+        ProductData productData = await _dbContext.GetProduct(productStrictFilter);
         
         SetProductEntry(productData);
         
-        DbContext.Products.Remove(productData);
-        await DbContext.SaveChangesAsync();
+        _dbContext.Products.Remove(productData);
+        await _dbContext.SaveChangesAsync();
     }
 
     private void SetProductEntry(ProductData productData)
     {
-        DbContext.SetEntry(productData);
-        DbContext.SetEntry(productData.Brand);
-        DbContext.SetEntry(productData.ProductType);
+        _dbContext.SetEntry(productData);
+        _dbContext.SetEntry(productData.Brand);
+        _dbContext.SetEntry(productData.ProductType);
     }
 }

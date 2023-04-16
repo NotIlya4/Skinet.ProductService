@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.SortingSystem.Product;
 
-public readonly record struct ProductSorting : ISorting
+public record ProductSorting : ISorting
 {
     public string PropertyName { get; }
     public SortingSide SortingSide { get; }

@@ -7,19 +7,19 @@ IServiceCollection services = builder.Services;
 ParametersProvider parametersProvider = new(builder.Configuration);
 
 services.AddServices();
-services.AddSingleton(parametersProvider);
 services.AddRepositories();
 services.AddMappers();
-services.AddAppDbContext(parametersProvider.GetConnectionString());
+services.AddAppDbContext(parametersProvider.GetSqlServer());
 services.AddExceptionCatcherMiddlewareServicesConfigured();
-services.AddControllers();
-services.AddEndpointsApiExplorer();
 services.AddConfiguredSwaggerGen();
 services.AddConfiguredCors();
 
-var app = builder.Build();
+services.AddControllers();
+services.AddEndpointsApiExplorer();
 
-await app.MigrationsAndSeeding(parametersProvider);
+WebApplication app = builder.Build();
+
+await app.ConfigureDb(parametersProvider);
 
 app.UseExceptionCatcherMiddleware();
 app.UseConfiguredCors();

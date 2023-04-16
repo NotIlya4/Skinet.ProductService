@@ -6,7 +6,14 @@ namespace Infrastructure.ProductService;
 
 public record GetProductsQuery
 {
-    public required Pagination Pagination { get; init; }
-    public required ProductSortingCollection SortingCollection { get; init; }
-    public required ProductFluentFilters FluentFilters { get; init; }
+    public Pagination Pagination { get; }
+    public ProductSortingCollection SortingCollection { get; }
+    public ProductFluentFilters FluentFilters { get; }
+
+    public GetProductsQuery(Pagination pagination, ProductSortingCollection sortingCollection, ProductFluentFilters fluentFilters)
+    {
+        Pagination = pagination;
+        SortingCollection = sortingCollection;
+        FluentFilters = fluentFilters;
+    }
 }

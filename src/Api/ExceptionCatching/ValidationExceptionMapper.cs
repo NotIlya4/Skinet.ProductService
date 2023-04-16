@@ -1,11 +1,11 @@
 ﻿using Domain.Exceptions;
 using ExceptionCatcherMiddleware.Mappers.CreatingCustomMappers;
 
-namespace Infrastructure.ExceptionCatching;
+namespace Api.ExceptionCatching;
 
-public class ValidationExceptionMapper : IExceptionMapper<ValidationException>
+public class ValidationExceptionMapper : IExceptionMapper<DomainValidationException>
 {
-    public BadResponse Map(ValidationException exception)
+    public BadResponse Map(DomainValidationException exception)
     {
         return new BadResponse()
         {

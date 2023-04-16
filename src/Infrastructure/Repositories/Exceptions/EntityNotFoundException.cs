@@ -1,8 +1,6 @@
-﻿using Domain.Exceptions;
+﻿namespace Infrastructure.Repositories.Exceptions;
 
-namespace Infrastructure.Repositories.Exceptions;
-
-public class EntityNotFoundException : NotFoundException
+public class EntityNotFoundException : Exception
 {
     public EntityNotFoundException(string entityName) : base($"Specified {entityName} wasn't found")
     {

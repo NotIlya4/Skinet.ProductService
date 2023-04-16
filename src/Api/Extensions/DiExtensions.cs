@@ -1,10 +1,10 @@
 ﻿using Api.Controllers.ProductsControllers.Helpers;
+using Api.ExceptionCatching;
 using Api.SwaggerMakeAllRequiredFilters;
 using Domain.Exceptions;
 using ExceptionCatcherMiddleware.Extensions;
 using ExceptionCatcherMiddleware.Options;
 using Infrastructure.EntityFramework;
-using Infrastructure.ExceptionCatching;
 using Infrastructure.ProductService;
 using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.Exceptions;
@@ -59,7 +59,7 @@ public static class DiExtensions
             optionsBuilder.CompilePolicy = MapperMethodsCompilePolicy.CompileAllAtStart;
             
             optionsBuilder.RegisterExceptionMapper<EntityNotFoundException, EntityNotFoundExceptionMapper>();
-            optionsBuilder.RegisterExceptionMapper<ValidationException, ValidationExceptionMapper>();
+            optionsBuilder.RegisterExceptionMapper<DomainValidationException, ValidationExceptionMapper>();
         });
     }
 

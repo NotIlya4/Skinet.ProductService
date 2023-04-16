@@ -2,7 +2,7 @@
 
 namespace Api.Controllers.ProductsControllers.Views;
 
-public record CreateProductCommandView
+public class CreateProductCommandView
 {
     [ProductName]
     public required string Name { get; init; }

@@ -1,24 +1,31 @@
-﻿using Domain.Exceptions;
+﻿using System.Diagnostics.CodeAnalysis;
+using Domain.Exceptions;
 
 namespace Domain.Primitives;
 
-public record struct Description : IComparable<Description>
+public record Description
 {
-    public string Value { get; private set; }
+    public string Value { get; }
     
-    public const int DescriptionMinLength = 10;
-    public const int DescriptionMaxLength = 500;
+    public static int DescriptionMinLength => 10;
+    public static int DescriptionMaxLength => 500;
 
     public Description(string? value)
     {
-        if (string.IsNullOrWhiteSpace(value))
+        void ThrowLengthException([NotNull] string? value)
         {
-            throw new ValidationException($"Description must be between {DescriptionMinLength} and {DescriptionMaxLength} in length");
+            throw new DomainValidationException($"Description must has characters count between " +
+                                                $"{DescriptionMinLength} and {DescriptionMaxLength}");
         }
         
-        if (value.Length is not (>= DescriptionMinLength and <= DescriptionMaxLength))
+        if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ValidationException($"Description must be between {DescriptionMinLength} and {DescriptionMaxLength} in length");
+            ThrowLengthException(value);
+        }
+        
+        if (!(value.Length >= DescriptionMinLength && value.Length <= DescriptionMaxLength))
+        {
+            ThrowLengthException(value);
         }
 
         Value = value;
@@ -27,10 +34,5 @@ public record struct Description : IComparable<Description>
     public override string ToString()
     {
         return Value;
-    }
-
-    public int CompareTo(Description other)
-    {
-        return string.Compare(Value, other.Value, StringComparison.Ordinal);
     }
 }

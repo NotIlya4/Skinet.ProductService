@@ -2,22 +2,17 @@
 
 namespace Domain.Primitives;
 
-public record struct Price : IComparable<Price>
+public record Price
 {
-    public decimal Value { get; private set; }
+    public decimal Value { get; }
     
     public Price(decimal value)
     {
         if (value < 0)
         {
-            throw new ValidationException("Price must be greater than 0");
+            throw new DomainValidationException("Price must be greater than 0");
         }
 
         Value = value;
-    }
-
-    public int CompareTo(Price other)
-    {
-        return Value.CompareTo(other.Value);
     }
 }

@@ -1,39 +1,28 @@
+using Api.Extensions;
+
 namespace Api.Properties;
 
 public class ParametersProvider
 {
-    public IConfiguration Configuration { get; }
+    private readonly IConfiguration _config;
 
-    public ParametersProvider(IConfiguration configuration)
+    public ParametersProvider(IConfiguration config)
     {
-        Configuration = configuration;
+        _config = config;
     }
     
-    public string GetConnectionString()
+    public string GetSqlServer()
     {
-        string server = GetRequiredParameter<string>("ConnectionString:Server");
-        string database = GetRequiredParameter<string>("ConnectionString:Database");
-        string userId = GetRequiredParameter<string>("ConnectionString:User Id");
-        string password = GetRequiredParameter<string>("ConnectionString:Password");
-
-        string connectionString =
-            $"Server={server};Database={database};User Id={userId};Password={password};MultipleActiveResultSets=true;TrustServerCertificate=true";
-
-        return connectionString;
+        return _config.GetSqlServerConnectionString("SqlServer");
     }
 
     public bool AutoMigrate()
     {
-        return GetRequiredParameter<bool>("AutoMigrate");
+        return _config.GetRequiredValue<bool>("AutoMigrate");
     }
 
     public bool AutoSeed()
     {
-        return GetRequiredParameter<bool>("AutoSeed");
-    }
-
-    private T GetRequiredParameter<T>(string parameterName)
-    {
-        return Configuration.GetSection(parameterName).Get<T>() ?? throw new ParameterNotFoundException(parameterName);
+        return _config.GetRequiredValue<bool>("AutoSeed");
     }
 }

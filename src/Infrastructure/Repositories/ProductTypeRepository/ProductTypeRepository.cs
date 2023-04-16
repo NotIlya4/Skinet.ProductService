@@ -8,36 +8,36 @@ namespace Infrastructure.Repositories.ProductTypeRepository;
 
 public class ProductTypeRepository : IProductTypeRepository
 {
-    private DataMapper Mapper { get; }
-    private ApplicationDbContext DbContext { get; }
+    private readonly DataMapper _mapper;
+    private readonly ApplicationDbContext _dbContext;
 
     public ProductTypeRepository(ApplicationDbContext dbContext, DataMapper mapper)
     {
-        Mapper = mapper;
-        DbContext = dbContext;
+        _mapper = mapper;
+        _dbContext = dbContext;
     }
 
     public async Task<List<Name>> GetProductTypes()
     {
-        List<ProductTypeData> productTypeDatas = await DbContext.ProductTypes.OrderBy(pt => pt.Name).ToListAsync();
-        return Mapper.MapProductType(productTypeDatas);
+        List<ProductTypeData> productTypeDatas = await _dbContext.ProductTypes.OrderBy(pt => pt.Name).ToListAsync();
+        return _mapper.MapProductType(productTypeDatas);
     }
 
     public async Task Add(Name productType)
     {
-        ProductTypeData productTypeData = Mapper.MapProductType(Guid.NewGuid(), productType);
-        DbContext.SetEntry(productTypeData);
+        ProductTypeData productTypeData = _mapper.MapProductType(Guid.NewGuid(), productType);
+        _dbContext.SetEntry(productTypeData);
         
-        await DbContext.ProductTypes.AddAsync(productTypeData);
-        await DbContext.SaveChangesAsync();
+        await _dbContext.ProductTypes.AddAsync(productTypeData);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task Delete(Name productType)
     {
-        ProductTypeData productTypeData = await DbContext.ProductTypes.FirstAsyncOrThrow(p => p.Name == productType.Value);
-        DbContext.SetEntry(productTypeData);
+        ProductTypeData productTypeData = await _dbContext.ProductTypes.FirstAsyncOrThrow(p => p.Name == productType.Value);
+        _dbContext.SetEntry(productTypeData);
         
-        DbContext.ProductTypes.Remove(productTypeData);
-        await DbContext.SaveChangesAsync();
+        _dbContext.ProductTypes.Remove(productTypeData);
+        await _dbContext.SaveChangesAsync();
     }
 }

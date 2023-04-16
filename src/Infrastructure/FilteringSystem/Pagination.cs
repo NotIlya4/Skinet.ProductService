@@ -1,8 +1,6 @@
-﻿using Domain.Exceptions;
+﻿namespace Infrastructure.FilteringSystem;
 
-namespace Infrastructure.FilteringSystem;
-
-public class Pagination
+public record Pagination
 {
     public int Offset { get; }
     public int Limit { get; }
@@ -13,12 +11,12 @@ public class Pagination
     {
         if (offset < 0)
         {
-            throw new ValidationException($"offset must be grater than 0, actual value {offset}");
+            throw new InvalidOperationException($"offset must be grater than 0, actual value {offset}");
         }
         
         if (limit < 1 || limit > MaxLimit)
         {
-            throw new ValidationException($"limit must be grater than 0 and less {MaxLimit}, actual value {limit}");
+            throw new InvalidOperationException($"limit must be grater than 0 and less {MaxLimit}, actual value {limit}");
         }
 
         Offset = offset;

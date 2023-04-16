@@ -2,7 +2,7 @@
 
 namespace Api.Controllers.ProductsControllers.Views;
 
-public record ProductStrictFilterView
+public class ProductStrictFilterView
 {
     [ProductStrictFilterPropertyName]
     public required string PropertyName { get; init; }

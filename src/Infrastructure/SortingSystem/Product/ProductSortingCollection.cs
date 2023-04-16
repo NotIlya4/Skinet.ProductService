@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.SortingSystem.Product;
 
-public class ProductSortingCollection
+public record ProductSortingCollection
 {
     public ProductSorting PrimarySorting { get; }
     public List<ProductSorting> SecondarySortings { get; }

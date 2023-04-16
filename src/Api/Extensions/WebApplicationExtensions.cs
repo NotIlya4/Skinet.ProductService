@@ -11,7 +11,7 @@ public static class WebApplicationExtensions
         applicationBuilder.UseCors("All");
     }
 
-    public static async Task MigrationsAndSeeding(this WebApplication applicationBuilder, ParametersProvider parameters)
+    public static async Task ConfigureDb(this WebApplication applicationBuilder, ParametersProvider parameters)
     {
         if (parameters.AutoMigrate())
         {

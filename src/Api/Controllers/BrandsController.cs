@@ -11,18 +11,18 @@ namespace Api.Controllers;
 [ProducesInternalException]
 public class BrandsController : ControllerBase
 {
-    private IBrandRepository BrandRepository { get; }
+    private readonly IBrandRepository _brandRepository;
 
     public BrandsController(IBrandRepository brandRepository)
     {
-        BrandRepository = brandRepository;
+        _brandRepository = brandRepository;
     }
     
     [HttpGet]
     [ProducesOk]
     public async Task<ActionResult<List<string>>> GetBrands()
     {
-        List<Name> brands = await BrandRepository.GetBrands();
+        List<Name> brands = await _brandRepository.GetBrands();
         return Ok(brands.Select(b => b.Value).ToList());
     }
 
@@ -31,7 +31,7 @@ public class BrandsController : ControllerBase
     [ProducesNoContent]
     public async Task<ActionResult> Add(string brand)
     {
-        await BrandRepository.Add(new Name(brand));
+        await _brandRepository.Add(new Name(brand));
         return NoContent();
     }
 
@@ -40,7 +40,7 @@ public class BrandsController : ControllerBase
     [ProducesNoContent]
     public async Task<ActionResult> Delete(string brand)
     {
-        await BrandRepository.Delete(new Name(brand));
+        await _brandRepository.Delete(new Name(brand));
         return NoContent();
     }
 }

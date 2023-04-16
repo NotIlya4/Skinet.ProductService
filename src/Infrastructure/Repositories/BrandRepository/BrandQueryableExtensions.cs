@@ -13,7 +13,7 @@ public static class BrandQueryableExtensions
         return await dbContext.Brands.FirstAsyncOrThrow(b => b.Name == brand.Value);
     }
 
-    public static async Task SetBrand(this ApplicationDbContext dbContext, BrandData brandData)
+    public static async Task EnsureBrandInTable(this ApplicationDbContext dbContext, BrandData brandData)
     {
         BrandData? dbBrand = await dbContext.Brands.FirstOrDefaultAsync(b => b.Id == brandData.Id);
         if (dbBrand is null)
@@ -23,11 +23,11 @@ public static class BrandQueryableExtensions
         }
     }
 
-    public static async Task SetBrands(this ApplicationDbContext dbContext, IEnumerable<BrandData> brandDatas)
+    public static async Task EnsureBrandsInTable(this ApplicationDbContext dbContext, IEnumerable<BrandData> brandDatas)
     {
         foreach (var brandData in brandDatas)
         {
-            await dbContext.SetBrand(brandData);
+            await dbContext.EnsureBrandInTable(brandData);
         }
     }
 }

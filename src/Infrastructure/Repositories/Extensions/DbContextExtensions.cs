@@ -6,7 +6,7 @@ namespace Infrastructure.Repositories.Extensions;
 
 public static class DbContextExtensions
 {
-    public static void DeleteEntry<TEntity>(this DbContext dbContext, TEntity entity)
+    public static void EnsureEntryDeleted<TEntity>(this DbContext dbContext, TEntity entity)
         where TEntity : class, IEntityComparable<TEntity>
     {
         EntityEntry<TEntity>? entry = dbContext.ChangeTracker.Entries<TEntity>()
@@ -21,7 +21,7 @@ public static class DbContextExtensions
     public static void SetEntry<TEntity>(this DbContext dbContext, TEntity entity)
         where TEntity : class, IEntityComparable<TEntity>
     {
-        dbContext.DeleteEntry(entity);
+        dbContext.EnsureEntryDeleted(entity);
         dbContext.Entry(entity).State = EntityState.Unchanged;
     }
 }

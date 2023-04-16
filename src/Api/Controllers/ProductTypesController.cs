@@ -11,18 +11,18 @@ namespace Api.Controllers;
 [ProducesInternalException]
 public class ProductTypesController : ControllerBase
 {
-    private IProductTypeRepository ProductTypeRepository { get; }
+    private readonly IProductTypeRepository _productTypeRepository;
 
     public ProductTypesController(IProductTypeRepository productTypeRepository)
     {
-        ProductTypeRepository = productTypeRepository;
+        _productTypeRepository = productTypeRepository;
     }
 
     [HttpGet]
     [ProducesOk]
     public async Task<ActionResult<IEnumerable<string>>> GetProductTypes()
     {
-        List<Name> productTypes = await ProductTypeRepository.GetProductTypes();
+        List<Name> productTypes = await _productTypeRepository.GetProductTypes();
         return Ok(productTypes.Select(p => p.Value));
     }
 
@@ -31,7 +31,7 @@ public class ProductTypesController : ControllerBase
     [ProducesNoContent]
     public async Task<ActionResult> Add(string productType)
     {
-        await ProductTypeRepository.Add(new Name(productType));
+        await _productTypeRepository.Add(new Name(productType));
         return NoContent();
     }
 
@@ -40,7 +40,7 @@ public class ProductTypesController : ControllerBase
     [ProducesNoContent]
     public async Task<ActionResult> Delete(string productType)
     {
-        await ProductTypeRepository.Delete(new Name(productType));
+        await _productTypeRepository.Delete(new Name(productType));
         return NoContent();
     }
 }

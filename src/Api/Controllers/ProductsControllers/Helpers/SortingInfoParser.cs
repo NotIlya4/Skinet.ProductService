@@ -13,8 +13,13 @@ public class SortingInfoParser
         return new ProductSorting(propertyName, sortingSide);
     }
     
-    public List<ProductSorting> ParseProductSortingInfo(IEnumerable<string> rawSortingInfos)
+    public List<ProductSorting> ParseProductSortingInfo(IEnumerable<string>? rawSortingInfos)
     {
+        if (rawSortingInfos is null)
+        {
+            return new List<ProductSorting>();
+        }
+        
         return rawSortingInfos.Select(ParseProductSortingInfo).ToList();
     }
     

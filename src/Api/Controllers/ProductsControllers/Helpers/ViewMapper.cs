@@ -1,13 +1,22 @@
 ﻿using Api.Controllers.ProductsControllers.Views;
 using Domain.Entities;
 using Domain.Primitives;
+using Infrastructure.FilteringSystem;
 using Infrastructure.FilteringSystem.Product;
 using Infrastructure.ProductService;
+using Infrastructure.SortingSystem.Product;
 
 namespace Api.Controllers.ProductsControllers.Helpers;
 
 public class ViewMapper
 {
+    private readonly SortingInfoParser _sortingInfoParser;
+
+    public ViewMapper(SortingInfoParser sortingInfoParser)
+    {
+        _sortingInfoParser = sortingInfoParser;
+    }
+    
     public Product MapProduct(ProductView productData)
     {
         return new Product(
@@ -46,21 +55,22 @@ public class ViewMapper
 
     public CreateProductCommand MapCreateProductCommand(CreateProductCommandView view)
     {
-        return new CreateProductCommand()
-        {
-            Name = new Name(view.Name),
-            Description = new Description(view.Description),
-            Price = new Price(view.Price),
-            PictureUrl = view.PictureUrl,
-            ProductType = new Name(view.ProductType),
-            Brand = new Name(view.Brand)
-        };
+        return new CreateProductCommand(name: new Name(view.Name), description: new Description(view.Description),
+            price: new Price(view.Price), pictureUrl: view.PictureUrl, productType: new Name(view.ProductType),
+            brand: new Name(view.Brand));
     }
 
-    public ProductStrictFilter MapProductStrictFilter(ProductStrictFilterView view)
+    public GetProductsQuery MapGetProductsQuery(GetProductsQueryView view)
     {
-        return new ProductStrictFilter(
-            productPropertyName: view.PropertyName,
-            expectedValue: view.Value);
+        Name? productTypeName = view.ProductType is not null ? new Name(view.ProductType) : null;
+        Name? brandName = view.Brand is not null ? new Name(view.Brand) : null;
+        Name? searching = view.Searching is not null ? new Name(view.Searching) : null;
+        return new GetProductsQuery(
+            pagination: new Pagination(offset: view.Offset, limit: view.Limit),
+            sortingCollection: new ProductSortingCollection(_sortingInfoParser.ParseProductSortingInfo(view.Sortings)),
+            fluentFilters: new ProductFluentFilters(
+                productTypeName: productTypeName,
+                brandName: brandName,
+                searching: searching));
     }
 }

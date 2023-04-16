@@ -1,8 +1,7 @@
 ﻿using ExceptionCatcherMiddleware.Mappers.CreatingCustomMappers;
 using Infrastructure.Repositories.Exceptions;
-using Microsoft.AspNetCore.Http;
 
-namespace Infrastructure.ExceptionCatching;
+namespace Api.ExceptionCatching;
 
 public class EntityNotFoundExceptionMapper : IExceptionMapper<EntityNotFoundException>
 {

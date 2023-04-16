@@ -43,10 +43,6 @@ public class ProductService : IProductService
     {
         List<Product> products = await _productRepository.GetProducts(query);
         int total = await _productRepository.GetProductsCountForFilters(query.FluentFilters);
-        return new GetProductsResult()
-        {
-            Products = products,
-            Total = total
-        };
+        return new GetProductsResult(products: products, total: total);
     }
 }

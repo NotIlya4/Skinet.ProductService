@@ -24,8 +24,8 @@ public class DbSeeder
     
     public async Task Seed()
     {
-        await _services.UsingScope<ApplicationDbContext>(async dbContext => { await dbContext.SetBrands(_brandDatas); });
-        await _services.UsingScope<ApplicationDbContext>(async dbContext => { await dbContext.SetProductTypes(_productTypeDatas); });
-        await _services.UsingScope<ApplicationDbContext>(async dbContext => { await dbContext.SetProducts(_productDatas); });
+        await _services.UsingScope<ApplicationDbContext>(async dbContext => { await dbContext.EnsureBrandsInTable(_brandDatas); });
+        await _services.UsingScope<ApplicationDbContext>(async dbContext => { await dbContext.EnsureProductTypesInTable(_productTypeDatas); });
+        await _services.UsingScope<ApplicationDbContext>(async dbContext => { await dbContext.EnsureProductsInTable(_productDatas); });
     }
 }

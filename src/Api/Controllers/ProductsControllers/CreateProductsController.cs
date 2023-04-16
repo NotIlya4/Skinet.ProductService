@@ -23,7 +23,8 @@ public class CreateProductsController : ProductsControllerBase
     [ProducesOk]
     public async Task<ActionResult<ProductView>> CreateProduct(CreateProductCommandView commandView)
     {
-        Product product = await _productService.CreateNewProduct(_mapper.MapCreateProductCommand(commandView));
+        CreateProductCommand command = _mapper.MapCreateProductCommand(commandView);
+        Product product = await _productService.CreateNewProduct(command);
         ProductView productView = _mapper.MapProduct(product);
         return Ok(productView);
     }

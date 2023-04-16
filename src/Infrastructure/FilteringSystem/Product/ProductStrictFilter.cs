@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.FilteringSystem.Product;
 
-public class ProductStrictFilter : IStrictFilter
+public record ProductStrictFilter : IStrictFilter
 {
     public ProductStrictFilterProperty Property { get; }
     public string PropertyName => Property.ToString();

@@ -1,7 +1,7 @@
 ﻿namespace Api.Controllers.ProductsControllers.Views;
 
-public record GetProductsResultView
+public class GetProductsResultView
 {
-    public required List<ProductView> Products { get; set; }
-    public required int Total { get; set; }
+    public required List<ProductView> Products { get; init; }
+    public required int Total { get; init; }
 }

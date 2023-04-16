@@ -20,7 +20,7 @@ public static class ProductQueryableExtensions
         return await dbContext.Products.IncludeProductDependencies().FirstAsyncOrThrow(strictFilter);
     }
 
-    public static async Task SetProduct(this ApplicationDbContext dbContext, ProductData productData)
+    public static async Task EnsureProductInTable(this ApplicationDbContext dbContext, ProductData productData)
     {
         ProductData? dbProduct = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == productData.Id);
         if (dbProduct is null)
@@ -33,11 +33,11 @@ public static class ProductQueryableExtensions
         }
     }
 
-    public static async Task SetProducts(this ApplicationDbContext dbContext, IEnumerable<ProductData> productDatas)
+    public static async Task EnsureProductsInTable(this ApplicationDbContext dbContext, IEnumerable<ProductData> productDatas)
     {
         foreach (var productData in productDatas)
         {
-            await dbContext.SetProduct(productData);
+            await dbContext.EnsureProductInTable(productData);
         }
     }
 }

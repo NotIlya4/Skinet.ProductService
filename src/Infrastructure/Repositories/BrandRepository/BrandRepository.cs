@@ -8,34 +8,34 @@ namespace Infrastructure.Repositories.BrandRepository;
 
 public class BrandRepository : IBrandRepository
 {
-    private DataMapper Mapper { get; }
-    private ApplicationDbContext DbContext { get; }
+    private readonly DataMapper _mapper;
+    private readonly ApplicationDbContext _dbContext;
 
     public BrandRepository(ApplicationDbContext dbContext, DataMapper mapper)
     {
-        Mapper = mapper;
-        DbContext = dbContext;
+        _mapper = mapper;
+        _dbContext = dbContext;
     }
 
     public async Task<List<Name>> GetBrands()
     {
-        List<BrandData> brandDatas = await DbContext.Brands.OrderBy(b => b.Name).ToListAsync();
-        return Mapper.MapBrand(brandDatas);
+        List<BrandData> brandDatas = await _dbContext.Brands.OrderBy(b => b.Name).ToListAsync();
+        return _mapper.MapBrand(brandDatas);
     }
 
     public async Task Add(Name brand)
     {
-        BrandData brandData = Mapper.MapBrand(Guid.NewGuid(), brand);
-        DbContext.SetEntry(brandData);
+        BrandData brandData = _mapper.MapBrand(Guid.NewGuid(), brand);
+        _dbContext.SetEntry(brandData);
         
-        await DbContext.Brands.AddAsync(brandData);
-        await DbContext.SaveChangesAsync();
+        await _dbContext.Brands.AddAsync(brandData);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task Delete(Name brand)
     {
-        BrandData brandData = await DbContext.GetBrand(brand);
-        DbContext.Brands.Remove(brandData);
-        await DbContext.SaveChangesAsync();
+        BrandData brandData = await _dbContext.GetBrand(brand);
+        _dbContext.Brands.Remove(brandData);
+        await _dbContext.SaveChangesAsync();
     }
 }
