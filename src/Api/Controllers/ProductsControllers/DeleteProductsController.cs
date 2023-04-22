@@ -7,7 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers.ProductsControllers;
 
 [Tags("Products")]
-public class DeleteProductsController : ProductsControllerBase
+[Route("products")]
+[ApiController]
+[ProducesInternalException]
+public class DeleteProductsController : ControllerBase
 {
     private readonly IProductService _productService;
 
@@ -17,14 +20,22 @@ public class DeleteProductsController : ProductsControllerBase
     }
     
     [HttpDelete]
-    [Route("{propertyName}/{value}")]
+    [Route("id/{id}")]
     [ProducesEntityNotFound]
     [ProducesNoContent]
-    public async Task<IActionResult> DeleteProduct([ProductStrictFilterPropertyName] string propertyName, string value)
+    public async Task<IActionResult> DeleteProductById(string id)
     {
-        await _productService.DeleteProduct(new ProductStrictFilter(
-            productPropertyName: propertyName, 
-            expectedValue: value));
+        await _productService.DeleteProduct(ProductStrictFilterProperty.Id, id);
+        return NoContent();
+    }
+    
+    [HttpDelete]
+    [Route("name/{name}")]
+    [ProducesEntityNotFound]
+    [ProducesNoContent]
+    public async Task<IActionResult> DeleteProductByName(string name)
+    {
+        await _productService.DeleteProduct(ProductStrictFilterProperty.Name, name);
         return NoContent();
     }
 }

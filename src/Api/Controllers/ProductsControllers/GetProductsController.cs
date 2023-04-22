@@ -10,7 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers.ProductsControllers;
 
 [Tags("Products")]
-public class GetProductsController : ProductsControllerBase
+[Route("products")]
+[ApiController]
+[ProducesInternalException]
+public class GetProductsController : ControllerBase
 {
     private readonly IProductService _productService;
     private readonly ViewMapper _mapper;
@@ -37,14 +40,23 @@ public class GetProductsController : ProductsControllerBase
     }
 
     [HttpGet]
-    [Route("{propertyName}/{value}")]
+    [Route("id/{id}")]
     [ProducesOk]
     [ProducesEntityNotFound]
-    public async Task<ActionResult<ProductView>> GetProduct([ProductStrictFilterPropertyName] string propertyName, string value)
+    public async Task<ActionResult<ProductView>> GetProductById(string id)
     {
-        Product product = await _productService.GetProduct(new ProductStrictFilter(
-            productPropertyName: propertyName, 
-            expectedValue: value));
+        Product product = await _productService.GetProduct(ProductStrictFilterProperty.Id, id);
+        ProductView productView = _mapper.MapProduct(product);
+        return Ok(productView);
+    }
+    
+    [HttpGet]
+    [Route("name/{name}")]
+    [ProducesOk]
+    [ProducesEntityNotFound]
+    public async Task<ActionResult<ProductView>> GetProductByName(string name)
+    {
+        Product product = await _productService.GetProduct(ProductStrictFilterProperty.Name, name);
         ProductView productView = _mapper.MapProduct(product);
         return Ok(productView);
     }

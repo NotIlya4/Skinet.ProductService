@@ -8,7 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers.ProductsControllers;
 
 [Tags("Products")]
-public class CreateProductsController : ProductsControllerBase
+[Route("products")]
+[ApiController]
+[ProducesInternalException]
+public class CreateProductsController : ControllerBase
 {
     private readonly IProductService _productService;
     private readonly ViewMapper _mapper;

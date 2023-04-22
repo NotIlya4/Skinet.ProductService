@@ -16,7 +16,7 @@ public class ProductsClient
     public async Task<JObject> CreateProduct(JObject jObject)
     {
         HttpContent httpContent = new StringContent(jObject.ToString(), System.Text.Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await Client.PostAsync("api/products", httpContent);
+        HttpResponseMessage response = await Client.PostAsync("products", httpContent);
         response.EnsureSuccessStatusCode();
         return await response.ExtractJObject();
     }
@@ -42,7 +42,7 @@ public class ProductsClient
 
         string? queryString = QueryString.Create(queryStringDict).Value;
 
-        var response = await Client.GetAsync($"api/products{queryString}");
+        var response = await Client.GetAsync($"products{queryString}");
         response.EnsureSuccessStatusCode();
 
         return await response.ExtractJObject();
@@ -62,12 +62,12 @@ public class ProductsClient
 
     public async Task<JObject> GetProduct(string propertyName, string value)
     {
-        return await Client.GetAsync($"api/products/{propertyName}/{value}").ExtractJObject();
+        return await Client.GetAsync($"products/{propertyName}/{value}").ExtractJObject();
     }
 
     public async Task DeleteProduct(string propertyName, string id)
     {
-        HttpResponseMessage response = await Client.DeleteAsync($"api/products/{propertyName}/{id}");
+        HttpResponseMessage response = await Client.DeleteAsync($"products/{propertyName}/{id}");
         response.EnsureSuccessStatusCode();
     }
 }

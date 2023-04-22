@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers;
 
 [Tags("Brands")]
-[Route("api/brands")]
+[Route("products/brands")]
 [ApiController]
 [ProducesInternalException]
 public class BrandsController : ControllerBase

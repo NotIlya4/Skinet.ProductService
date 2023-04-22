@@ -13,13 +13,13 @@ public class ProductTypesClient
     
     public async Task Add(string productTypeName)
     {
-        HttpResponseMessage response = await Client.PostAsync($"api/product-types/{productTypeName}");
+        HttpResponseMessage response = await Client.PostAsync($"product-types/{productTypeName}");
         response.EnsureSuccessStatusCode();
     }
 
     public async Task<JArray> GetProductTypes()
     {
-        HttpResponseMessage response = await Client.GetAsync("api/product-types");
+        HttpResponseMessage response = await Client.GetAsync("product-types");
         response.EnsureSuccessStatusCode();
         
         return await response.ExtractJArray();
@@ -27,7 +27,7 @@ public class ProductTypesClient
     
     public async Task Delete(string productTypeName)
     {
-        HttpResponseMessage response = await Client.DeleteAsync($"api/product-types/{productTypeName}");
+        HttpResponseMessage response = await Client.DeleteAsync($"product-types/{productTypeName}");
         response.EnsureSuccessStatusCode();
     }
 }

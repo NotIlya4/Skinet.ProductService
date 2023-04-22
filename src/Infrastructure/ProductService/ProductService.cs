@@ -13,9 +13,9 @@ public class ProductService : IProductService
         _productRepository = productRepository;
     }
 
-    public async Task<Product> GetProduct(ProductStrictFilter filter)
+    public async Task<Product> GetProduct(ProductStrictFilterProperty property, string value)
     {
-        return await _productRepository.GetProduct(filter);
+        return await _productRepository.GetProduct(new ProductStrictFilter(property, value));
     }
 
     public async Task<Product> CreateNewProduct(CreateProductCommand createProductCommand)
@@ -34,9 +34,9 @@ public class ProductService : IProductService
         return product;
     }
 
-    public async Task DeleteProduct(ProductStrictFilter filter)
+    public async Task DeleteProduct(ProductStrictFilterProperty property, string value)
     {
-        await _productRepository.Delete(filter);
+        await _productRepository.Delete(new ProductStrictFilter(property, value));
     }
 
     public async Task<GetProductsResult> GetProducts(GetProductsQuery query)
