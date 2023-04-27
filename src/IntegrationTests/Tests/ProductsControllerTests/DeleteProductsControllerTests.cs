@@ -35,7 +35,7 @@ public class DeleteProductsControllerTests
 
         await Client.DeleteProduct("name", AppFixture.ProductsList.IPhone13.Name.ToString());
         
-        JArray products = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50 });
+        JArray products = await Client.GetProducts(new GetProductsQueryView(0, 50));
         
         Assert.Equal(expect, products);
 
@@ -55,7 +55,7 @@ public class DeleteProductsControllerTests
 
         await Client.DeleteProduct("id", AppFixture.ProductsList.QuarterPounder.Id.ToString());
         
-        JArray products = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50 });
+        JArray products = await Client.GetProducts(new GetProductsQueryView(0, 50));
         
         Assert.Equal(expect, products);
 

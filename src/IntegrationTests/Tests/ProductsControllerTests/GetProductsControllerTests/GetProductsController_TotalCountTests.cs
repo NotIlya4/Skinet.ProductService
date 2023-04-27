@@ -22,7 +22,7 @@ public class GetProductsController_TotalCountTests
     [Fact]
     public async Task GetProducts_Limit1Offset1_CountRegardlessLimitAndOffset()
     {
-        int total = await Client.GetProductsTotal(new GetProductsQueryView() { Offset = 1, Limit = 1 });
+        int total = await Client.GetProductsTotal(new GetProductsQueryView(1, 1));
         
         Assert.Equal(5, total);
     }
@@ -30,7 +30,7 @@ public class GetProductsController_TotalCountTests
     [Fact]
     public async Task GetProducts_Filters_CountWithAppliedFilters()
     {
-        int total = await Client.GetProductsTotal(new GetProductsQueryView() { Offset = 0, Limit = 50, Brand = "Apple"});
+        int total = await Client.GetProductsTotal(new GetProductsQueryView(0, 50, brand: "Apple"));
         
         Assert.Equal(3, total);
     }
@@ -38,7 +38,7 @@ public class GetProductsController_TotalCountTests
     [Fact]
     public async Task GetProducts_Limit1Offset1WithFilters_CountWithAppliedFiltersRegardlessLimitAndOffset()
     {
-        int total = await Client.GetProductsTotal(new GetProductsQueryView() { Offset = 1, Limit = 1, Brand = "Apple"});
+        int total = await Client.GetProductsTotal(new GetProductsQueryView(1, 1, brand: "Apple"));
         
         Assert.Equal(3, total);
     }

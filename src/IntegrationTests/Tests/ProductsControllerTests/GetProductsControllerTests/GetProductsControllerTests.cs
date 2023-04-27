@@ -22,7 +22,7 @@ public class GetProductsControllerTests
     [Fact]
     public async Task GetProducts_ReturnInitialDb()
     {
-        JObject response = await Client.GetProductsBase(new GetProductsQueryView() { Offset = 0, Limit = 50 });
+        JObject response = await Client.GetProductsBase(new GetProductsQueryView(0, 50));
         JArray responseProducts = response["products"]?.Value<JArray>()!;
         int total = response["total"]!.Value<int>()!;
         

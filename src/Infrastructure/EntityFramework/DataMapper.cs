@@ -25,16 +25,14 @@ public class DataMapper
 
     public ProductData MapProduct(Product product, ProductTypeData productTypeData, BrandData brandData)
     {
-        return new ProductData()
-        {
-            Id = product.Id.ToString(),
-            Name = product.Name.Value,
-            Description = product.Description.Value,
-            Price = product.Price.Value,
-            PictureUrl = product.PictureUrl.ToString(),
-            ProductType = productTypeData,
-            Brand = brandData,
-        };
+        return new ProductData(
+            id: product.Id.ToString(),
+            name: product.Name.Value,
+            description: product.Description.Value,
+            price: product.Price.Value,
+            pictureUrl: product.PictureUrl.ToString(),
+            productType: productTypeData,
+            brand: brandData);
     }
 
     public Name MapBrand(BrandData brandData)
@@ -49,11 +47,9 @@ public class DataMapper
 
     public BrandData MapBrand(Guid id, Name name)
     {
-        return new BrandData()
-        {
-            Id = id.ToString(),
-            Name = name.Value
-        };
+        return new BrandData(
+            id: id.ToString(),
+            name: name.Value);
     }
 
     public Name MapProductType(ProductTypeData productTypeData)
@@ -68,10 +64,8 @@ public class DataMapper
 
     public ProductTypeData MapProductType(Guid id, Name name)
     {
-        return new ProductTypeData()
-        {
-            Id = id.ToString(),
-            Name = name.Value
-        };
+        return new ProductTypeData(
+            id: id.ToString(),
+            name: name.Value);
     }
 }

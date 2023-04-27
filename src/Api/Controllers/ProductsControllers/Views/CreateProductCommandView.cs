@@ -5,15 +5,25 @@ namespace Api.Controllers.ProductsControllers.Views;
 public class CreateProductCommandView
 {
     [ProductName]
-    public required string Name { get; init; }
+    public string Name { get; }
     [ProductDescription]
-    public required string Description { get; init; }
+    public string Description { get; }
     [ProductPrice]
-    public required decimal Price { get; init; }
+    public decimal Price { get; }
     [ProductPictureUrl]
-    public required Uri PictureUrl { get; init; }
+    public Uri PictureUrl { get; }
     [ProductType]
-    public required string ProductType { get; init; }
+    public string ProductType { get; }
     [ProductBrandName]
-    public required string Brand { get; init; }
+    public string Brand { get; }
+
+    public CreateProductCommandView(string name, string description, decimal price, Uri pictureUrl, string productType, string brand)
+    {
+        Name = name;
+        Description = description;
+        Price = price;
+        PictureUrl = pictureUrl;
+        ProductType = productType;
+        Brand = brand;
+    }
 }

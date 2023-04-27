@@ -2,6 +2,12 @@
 
 public class GetProductsResultView
 {
-    public required List<ProductView> Products { get; init; }
-    public required int Total { get; init; }
+    public List<ProductView> Products { get; }
+    public int Total { get; }
+
+    public GetProductsResultView(List<ProductView> products, int total)
+    {
+        Products = products;
+        Total = total;
+    }
 }

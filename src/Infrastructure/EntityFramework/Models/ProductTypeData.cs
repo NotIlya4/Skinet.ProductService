@@ -4,8 +4,20 @@ namespace Infrastructure.EntityFramework.Models;
 
 public class ProductTypeData : IEntityComparable<ProductTypeData>
 {
-    public required string Id { get; set; }
-    public required string Name { get; set; }
+    public string Id { get; private set; }
+    public string Name { get; private set; }
+
+    public ProductTypeData(string id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+
+    private ProductTypeData()
+    {
+        Id = null!;
+        Name = null!;
+    }
 
     public bool EqualId(ProductTypeData entity)
     {

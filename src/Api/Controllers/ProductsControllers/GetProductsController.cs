@@ -30,13 +30,9 @@ public class GetProductsController : ControllerBase
     {
         GetProductsQuery query = _mapper.MapGetProductsQuery(queryView);
         GetProductsResult result = await _productService.GetProducts(query);
-        List<ProductView> productViews = _mapper.MapProduct(result.Products);
+        GetProductsResultView resultView = _mapper.MapGetProductsResult(result);
         
-        return Ok(new GetProductsResultView()
-        {
-            Products = productViews,
-            Total = result.Total
-        });
+        return Ok(resultView);
     }
 
     [HttpGet]
@@ -47,6 +43,7 @@ public class GetProductsController : ControllerBase
     {
         Product product = await _productService.GetProduct(ProductStrictFilterProperty.Id, id);
         ProductView productView = _mapper.MapProduct(product);
+        
         return Ok(productView);
     }
     
@@ -58,6 +55,7 @@ public class GetProductsController : ControllerBase
     {
         Product product = await _productService.GetProduct(ProductStrictFilterProperty.Name, name);
         ProductView productView = _mapper.MapProduct(product);
+        
         return Ok(productView);
     }
 }

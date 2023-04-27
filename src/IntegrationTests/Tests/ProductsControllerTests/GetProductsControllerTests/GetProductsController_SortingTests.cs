@@ -30,8 +30,8 @@ public class GetProductsController_SortingTests
             AppFixture.ProductsList.IBurgerJObject,
             AppFixture.ProductsList.BigMacJObject,
         };
-        
-        JArray products = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50, Sortings = new []{"-name"}});
+
+        JArray products = await Client.GetProducts(new GetProductsQueryView(0, 50, sortings: new[] { "-name" }));
 
         Assert.Equal(expect, products);
     }
@@ -48,7 +48,7 @@ public class GetProductsController_SortingTests
             AppFixture.ProductsList.IPhone13ProMaxJObject,
         };
         
-        JArray products = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50, Sortings = new []{"+price"}});
+        JArray products = await Client.GetProducts(new GetProductsQueryView(0, 50, sortings: new[] { "+price" }));
 
         Assert.Equal(expect, products);
     }
@@ -65,7 +65,7 @@ public class GetProductsController_SortingTests
             AppFixture.ProductsList.BigMacJObject,
         };
         
-        JArray products = await Client.GetProducts(new GetProductsQueryView() { Offset = 0, Limit = 50, Sortings = new []{"-price"}});
+        JArray products = await Client.GetProducts(new GetProductsQueryView(0, 50, sortings: new[] { "-price" }));
 
         Assert.Equal(expect, products);
     }

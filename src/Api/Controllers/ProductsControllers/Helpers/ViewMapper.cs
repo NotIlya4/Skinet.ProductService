@@ -36,16 +36,14 @@ public class ViewMapper
 
     public ProductView MapProduct(Product product)
     {
-        return new ProductView()
-        {
-            Id = product.Id,
-            Name = product.Name.Value,
-            Description = product.Description.Value,
-            Price = product.Price.Value,
-            PictureUrl = product.PictureUrl,
-            ProductType = product.ProductType.Value,
-            Brand = product.Brand.Value
-        };
+        return new ProductView(
+            id: product.Id,
+            name: product.Name.Value,
+            description: product.Description.Value,
+            price: product.Price.Value,
+            pictureUrl: product.PictureUrl,
+            productType: product.ProductType.Value,
+            brand: product.Brand.Value);
     }
     
     public List<ProductView> MapProduct(IEnumerable<Product> products)
@@ -72,5 +70,12 @@ public class ViewMapper
                 productTypeName: productTypeName,
                 brandName: brandName,
                 searching: searching));
+    }
+
+    public GetProductsResultView MapGetProductsResult(GetProductsResult getProductsResult)
+    {
+        return new GetProductsResultView(
+            products: MapProduct(getProductsResult.Products),
+            total: getProductsResult.Total);
     }
 }

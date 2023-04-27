@@ -2,10 +2,22 @@
 
 namespace Infrastructure.EntityFramework.Models;
 
-public record BrandData : IEntityComparable<BrandData>
+public class BrandData : IEntityComparable<BrandData>
 {
-    public required string Id { get; init; }
-    public required string Name { get; init; }
+    public string Id { get; private set; }
+    public string Name { get; private set; }
+
+    public BrandData(string id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+
+    private BrandData()
+    {
+        Id = null!;
+        Name = null!;
+    }
 
     public bool EqualId(BrandData entity)
     {

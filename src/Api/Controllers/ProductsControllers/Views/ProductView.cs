@@ -4,17 +4,28 @@ namespace Api.Controllers.ProductsControllers.Views;
 
 public class ProductView
 {
-    public required Guid Id { get; init; }
+    public Guid Id { get; }
     [ProductName]
-    public required string Name { get; init; }
+    public string Name { get; }
     [ProductDescription]
-    public required string Description { get; init; }
+    public string Description { get; }
     [ProductPrice]
-    public required decimal Price { get; init; }
+    public decimal Price { get; }
     [ProductPictureUrl]
-    public required Uri PictureUrl { get; init; }
+    public Uri PictureUrl { get; }
     [ProductType]
-    public required string ProductType { get; init; }
+    public string ProductType { get; }
     [ProductBrandName]
-    public required string Brand { get; init; }
+    public string Brand { get; }
+
+    public ProductView(Guid id, string name, string description, decimal price, Uri pictureUrl, string productType, string brand)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        Price = price;
+        PictureUrl = pictureUrl;
+        ProductType = productType;
+        Brand = brand;
+    }
 }

@@ -4,14 +4,29 @@ namespace Api.Controllers.ProductsControllers.Views;
 
 public class GetProductsQueryView
 {
-    public required int Offset { get; init; }
-    public required int Limit { get; init; }
+    public int Offset { get; set; }
+    public int Limit { get; set; }
     [ProductSortings]
-    public IEnumerable<string>? Sortings { get; init; }
+    public IEnumerable<string>? Sortings { get; set; }
     [GetProductsProductType]
-    public string? ProductType { get; init; }
+    public string? ProductType { get; set; }
     [GetProductsBrand]
-    public string? Brand { get; init; }
+    public string? Brand { get; set; }
     [GetProductsSearching]
-    public string? Searching { get; init; }
+    public string? Searching { get; set; }
+
+    public GetProductsQueryView(int offset, int limit, IEnumerable<string>? sortings = null, string? productType = null, string? brand = null, string? searching = null)
+    {
+        Offset = offset;
+        Limit = limit;
+        Sortings = sortings;
+        ProductType = productType;
+        Brand = brand;
+        Searching = searching;
+    }
+
+    public GetProductsQueryView()
+    {
+        
+    }
 }

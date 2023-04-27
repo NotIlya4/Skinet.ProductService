@@ -21,6 +21,6 @@ public class ProductTypesToSeed
 
     private ProductTypeData MakeProductType(string id, string name)
     {
-        return new ProductTypeData() { Id = id, Name = name };
+        return new ProductTypeData(id: id, name: name);
     }
 }

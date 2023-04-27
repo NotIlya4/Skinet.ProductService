@@ -21,12 +21,12 @@ public class BrandsList
         string appleId = "2d15e347-cf3d-4d8c-bdd7-c65f22e653f4";
         string appleName = "Apple";
         Apple = new Name(appleName);
-        AppleData = new BrandData() { Id = appleId, Name = appleName };
+        AppleData = new BrandData(id: appleId, name: appleName);
 
         string mcDonaldsId = "aa7fe749-2e4b-45c4-b3f7-49c6f30d7d10";
         string mcDonaldsName = "McDonald's";
         McDonalds = new Name(mcDonaldsName);
-        McDonaldsData = new BrandData() { Id = mcDonaldsId, Name = mcDonaldsName };
+        McDonaldsData = new BrandData(id: mcDonaldsId, name: mcDonaldsName);
 
         Brands = new List<Name>()
         {

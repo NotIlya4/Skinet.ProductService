@@ -1,4 +1,5 @@
-﻿using IntegrationTests.Clients;
+﻿using Api.Controllers.ProductsControllers.Views;
+using IntegrationTests.Clients;
 using IntegrationTests.Fixtures;
 using Newtonsoft.Json.Linq;
 
@@ -39,7 +40,7 @@ public class CreateProductsControllerTests
         JArray expectProducts = new JArray(InitialDb);
         expectProducts.Add(responsePostProduct);
 
-        JArray products = await Client.GetProducts(new() { Limit = 50, Offset = 0 });
+        JArray products = await Client.GetProducts(new GetProductsQueryView(0, 50));
         
         Assert.Equal(expectProducts, products);
 

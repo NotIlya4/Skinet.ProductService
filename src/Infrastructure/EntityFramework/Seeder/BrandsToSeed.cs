@@ -25,6 +25,6 @@ public class BrandsToSeed
 
     private BrandData MakeBrand(string id, string name)
     {
-        return new BrandData() { Id = id, Name = name };
+        return new BrandData(id: id, name: name);
     }
 }
