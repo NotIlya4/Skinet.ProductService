@@ -7,52 +7,51 @@ namespace IntegrationTests.Tests.EndpointsTests;
 [Collection(nameof(AppFixture))]
 public class BrandsControllerTests
 {
-    public JArray InitialDb { get; }
-    public BrandsClient Client { get; }
-    public AppFixture AppFixture { get; }
-    public BrandsList BrandsList { get; }
+    private readonly JArray _brands;
+    private readonly BrandsControllerClient _client;
+    private readonly AppFixture _fixture;
 
-    public BrandsControllerTests(AppFixture appFixture)
+    public BrandsControllerTests(AppFixture fixture)
     {
-        Client = new BrandsClient(appFixture.Client);
-        InitialDb = appFixture.BrandsList.BrandsJArray;
-        AppFixture = appFixture;
-        BrandsList = AppFixture.BrandsList;
+        _client = new BrandsControllerClient(fixture.Client);
+        _brands = fixture.BrandsList.BrandsJArray;
+        _fixture = fixture;
     }
 
     [Fact]
-    public async Task GetBrands_ReturnBrands()
+    public async Task GetBrands_SeededBrands_ThatSeededBrands()
     {
-        JArray result = await Client.GetBrands();
+        JArray result = await _client.GetBrands();
 
-        Assert.Equal(InitialDb, result);
+        Assert.Equal(_brands, result);
     }
 
     [Fact]
-    public async Task AddBrand_ReturnPersistedBrand()
+    public async Task Add_AddNewBrand_SeededBrandsWithNewOneInAlphabeticalOrder()
     {
         string newBrand = "Barbie";
-
-        await Client.Add(newBrand);
-
-        List<JToken> expectBrandsInDb = new JArray(InitialDb).ToList();
-        expectBrandsInDb.Insert(1, newBrand);
+        await _client.Add(newBrand);
+        JArray expect = new JArray(_brands);
+        expect.Insert(1, newBrand);
         
-        List<JToken> brandsInDb = (await Client.GetBrands()).ToList();
-        Assert.Equal(expectBrandsInDb, brandsInDb);
+        JArray result = await _client.GetBrands();
+        
+        Assert.Equal(expect, result);
 
-        await AppFixture.ReloadDb();
+        await _fixture.ReloadDb();
     }
 
     [Fact]
-    public async Task DeleteBrand_DeleteBrand()
+    public async Task Delete_ExistingBrand_SeededBrandsWithoutDeletedOne()
     {
-        await Client.Add("Sony");
-        await Client.Delete("Sony");
-        JArray brandsAfterDelete = await Client.GetBrands();
+        var expect = new JArray(_brands);
+        expect.Remove(expect.First(t => t.Value<string>() == "Apple"));
+        await _client.Delete("Apple");
         
-        Assert.Equal(InitialDb, brandsAfterDelete);
+        JArray result = await _client.GetBrands();
+        
+        Assert.Equal(expect, result);
 
-        await AppFixture.ReloadDb();
+        await _fixture.ReloadDb();
     }
 }

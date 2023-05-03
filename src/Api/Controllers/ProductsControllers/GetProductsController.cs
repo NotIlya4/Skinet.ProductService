@@ -27,7 +27,7 @@ public class GetProductsController : ControllerBase
     [ProducesOk]
     public async Task<ActionResult<GetProductsResultView>> GetProducts([FromQuery] GetProductsRequestView requestView)
     {
-        GetProductsRequest request = _mapper.MapGetProductsQuery(requestView);
+        GetProductsRequest request = _mapper.MapGetProductsRequest(requestView);
         GetProductsResult result = await _productService.GetProducts(request);
         GetProductsResultView resultView = _mapper.MapGetProductsResult(result);
         

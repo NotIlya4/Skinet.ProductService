@@ -26,7 +26,7 @@ public class CreateProductsController : ControllerBase
     [ProducesOk]
     public async Task<ActionResult<ProductView>> CreateProduct(CreateProductRequestView requestView)
     {
-        CreateProductRequest request = _mapper.MapCreateProductCommand(requestView);
+        CreateProductRequest request = _mapper.MapCreateProductRequest(requestView);
         Product product = await _productService.CreateNewProduct(request);
         ProductView productView = _mapper.MapProduct(product);
         return Ok(productView);

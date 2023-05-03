@@ -4,8 +4,8 @@ namespace Api.Controllers.ProductsControllers.Views;
 
 public class GetProductsRequestView
 {
-    public int Offset { get; set; }
-    public int Limit { get; set; }
+    public int? Offset { get; set; }
+    public int? Limit { get; set; }
     [ProductSortings]
     public IEnumerable<string>? Sortings { get; set; }
     [GetProductsProductType]
@@ -15,7 +15,7 @@ public class GetProductsRequestView
     [GetProductsSearching]
     public string? Searching { get; set; }
 
-    public GetProductsRequestView(int offset, int limit, IEnumerable<string>? sortings = null, string? productType = null, string? brand = null, string? searching = null)
+    public GetProductsRequestView(int? offset = null, int? limit = null, IEnumerable<string>? sortings = null, string? productType = null, string? brand = null, string? searching = null)
     {
         Offset = offset;
         Limit = limit;

@@ -51,25 +51,37 @@ public class ViewMapper
         return products.Select(MapProduct).ToList();
     }
 
-    public CreateProductRequest MapCreateProductCommand(CreateProductRequestView view)
+    public CreateProductRequest MapCreateProductRequest(CreateProductRequestView view)
     {
         return new CreateProductRequest(name: new Name(view.Name), description: new Description(view.Description),
             price: new Price(view.Price), pictureUrl: view.PictureUrl, productType: new Name(view.ProductType),
             brand: new Name(view.Brand));
     }
 
-    public GetProductsRequest MapGetProductsQuery(GetProductsRequestView view)
+    public GetProductsRequest MapGetProductsRequest(GetProductsRequestView view)
     {
-        Name? productTypeName = view.ProductType is not null ? new Name(view.ProductType) : null;
-        Name? brandName = view.Brand is not null ? new Name(view.Brand) : null;
-        Name? searching = view.Searching is not null ? new Name(view.Searching) : null;
         return new GetProductsRequest(
-            pagination: new Pagination(offset: view.Offset, limit: view.Limit),
-            sortingCollection: new ProductSortingCollection(_sortingInfoParser.ParseProductSortingInfo(view.Sortings)),
-            fluentFilters: new ProductFluentFilters(
-                productType: productTypeName,
-                brand: brandName,
-                searching: searching));
+            pagination: MapPagination(view.Offset, view.Limit),
+            sorting: new ProductSortingCollection(_sortingInfoParser.ParseProductSortingInfo(view.Sortings)),
+            filters: MapProductFluentFilters(productType: view.ProductType, brand: view.Brand, searching: view.Searching));
+    }
+
+    private Pagination MapPagination(int? offset, int? limit)
+    {
+        return offset is not null && limit is not null ? new Pagination(offset.Value, limit.Value) : new Pagination();
+    }
+
+    private ProductFluentFilters MapProductFluentFilters(string? productType, string? brand, string? searching)
+    {
+        Name? ToName(string? value)
+        {
+            return value is not null ? new Name(value) : null;
+        }
+
+        return new ProductFluentFilters(
+            productType: ToName(productType),
+            brand: ToName(brand),
+            searching: ToName(searching));
     }
 
     public GetProductsResultView MapGetProductsResult(GetProductsResult getProductsResult)

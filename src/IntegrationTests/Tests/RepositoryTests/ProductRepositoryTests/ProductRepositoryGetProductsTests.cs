@@ -61,8 +61,8 @@ public class ProductRepositoryGetProductsTests : IDisposable
             _productsList.IPhone13ProMax,
         };
 
-        List<Product> result = await _repository
-            .GetProducts(new GetProductsRequest(new ProductFluentFilters(productType: _productTypesList.Smartphone)));
+        var filters = new ProductFluentFilters(productType: _productTypesList.Smartphone);
+        List<Product> result = await _repository.GetProducts(new GetProductsRequest(filters: filters));
         
         Assert.Equal(expect, result);
     }
@@ -77,8 +77,8 @@ public class ProductRepositoryGetProductsTests : IDisposable
             _productsList.IPhone13ProMax,
         };
 
-        List<Product> result = await _repository
-            .GetProducts(new GetProductsRequest(new ProductFluentFilters(brand: _brandsList.Apple)));
+        var filters = new ProductFluentFilters(brand: _brandsList.Apple);
+        List<Product> result = await _repository.GetProducts(new GetProductsRequest(filters: filters));
         
         Assert.Equal(expect, result);
     }
@@ -91,9 +91,9 @@ public class ProductRepositoryGetProductsTests : IDisposable
             _productsList.IPhone13,
             _productsList.IPhone13ProMax,
         };
-        
-        List<Product> result = await _repository
-            .GetProducts(new GetProductsRequest(new ProductFluentFilters(searching: new Name("iPhone"))));
+
+        var filters = new ProductFluentFilters(searching: new Name("iPhone"));
+        List<Product> result = await _repository.GetProducts(new GetProductsRequest(filters: filters));
         
         Assert.Equal(expect, result);
     }
@@ -109,9 +109,9 @@ public class ProductRepositoryGetProductsTests : IDisposable
             _productsList.QuarterPounder,
             _productsList.BigMac
         };
-        
-        List<Product> result = await _repository
-            .GetProducts(new GetProductsRequest(new ProductSortingCollection(new ProductSorting(ProductSortingProperty.Price, SortingSide.Desc))));
+
+        var sortingCollection = new ProductSortingCollection(new ProductSorting(ProductSortingProperty.Price, SortingSide.Desc));
+        List<Product> result = await _repository.GetProducts(new GetProductsRequest(sorting: sortingCollection));
         
         Assert.Equal(expect, result);
     }

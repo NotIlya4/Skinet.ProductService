@@ -3,24 +3,24 @@ using Newtonsoft.Json.Linq;
 
 namespace IntegrationTests.Clients;
 
-public class BrandsClient
+public class BrandsControllerClient
 {
     public HttpClient Client { get; }
     
-    public BrandsClient(HttpClient client)
+    public BrandsControllerClient(HttpClient client)
     {
         Client = client;
     }
     
     public async Task Add(string brandName)
     {
-        HttpResponseMessage response = await Client.PostAsync($"brands/{brandName}");
+        HttpResponseMessage response = await Client.PostAsync($"products/brands/{brandName}");
         response.EnsureSuccessStatusCode();
     }
 
     public async Task<JArray> GetBrands()
     {
-        HttpResponseMessage response = await Client.GetAsync("brands");
+        HttpResponseMessage response = await Client.GetAsync("products/brands");
         response.EnsureSuccessStatusCode();
         
         return await response.ExtractJArray();
@@ -28,7 +28,7 @@ public class BrandsClient
     
     public async Task Delete(string brandName)
     {
-        HttpResponseMessage response = await Client.DeleteAsync($"brands/{brandName}");
+        HttpResponseMessage response = await Client.DeleteAsync($"products/brands/{brandName}");
         response.EnsureSuccessStatusCode();
     }
 }

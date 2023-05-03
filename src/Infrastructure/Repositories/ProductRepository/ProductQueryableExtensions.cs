@@ -87,8 +87,8 @@ public static class ProductQueryableExtensions
     {
         return await dbContext.Products
             .IncludeProductDependencies()
-            .ApplySorting(request.SortingCollection)
-            .ApplyFluentFilters(request.FluentFilters)
+            .ApplySorting(request.Sorting)
+            .ApplyFluentFilters(request.Filters)
             .ApplyPagination(request.Pagination)
             .ToListAsync();
     }
