@@ -1,9 +1,4 @@
-﻿using Api.Controllers.ProductsControllers.Views;
-using IntegrationTests.Clients;
-using IntegrationTests.Fixtures;
-using Newtonsoft.Json.Linq;
-
-namespace IntegrationTests;
+﻿namespace IntegrationTests;
 
 [Collection(nameof(AppFixture))]
 public class TempTests
@@ -16,8 +11,8 @@ public class TempTests
     }
     
     // [Fact]
-    public async Task Test()
-    {
-        
-    }
+    // public async Task Test()
+    // {
+    //     
+    // }
 }

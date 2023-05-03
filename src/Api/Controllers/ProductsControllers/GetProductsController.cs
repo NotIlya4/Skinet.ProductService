@@ -1,7 +1,6 @@
 using Api.Controllers.ProductsControllers.Helpers;
 using Api.Controllers.ProductsControllers.Views;
 using Api.ProducesAttributes;
-using Api.SwaggerEnrichers.ProductStrictFilterView;
 using Domain.Entities;
 using Infrastructure.FilteringSystem.Product;
 using Infrastructure.ProductService;
@@ -26,10 +25,10 @@ public class GetProductsController : ControllerBase
 
     [HttpGet]
     [ProducesOk]
-    public async Task<ActionResult<GetProductsResultView>> GetProducts([FromQuery] GetProductsQueryView queryView)
+    public async Task<ActionResult<GetProductsResultView>> GetProducts([FromQuery] GetProductsRequestView requestView)
     {
-        GetProductsQuery query = _mapper.MapGetProductsQuery(queryView);
-        GetProductsResult result = await _productService.GetProducts(query);
+        GetProductsRequest request = _mapper.MapGetProductsQuery(requestView);
+        GetProductsResult result = await _productService.GetProducts(request);
         GetProductsResultView resultView = _mapper.MapGetProductsResult(result);
         
         return Ok(resultView);
@@ -41,7 +40,7 @@ public class GetProductsController : ControllerBase
     [ProducesEntityNotFound]
     public async Task<ActionResult<ProductView>> GetProductById(string id)
     {
-        Product product = await _productService.GetProduct(ProductStrictFilterProperty.Id, id);
+        Product product = await _productService.GetProduct(new ProductStrictFilter(ProductStrictFilterProperty.Id, id));
         ProductView productView = _mapper.MapProduct(product);
         
         return Ok(productView);
@@ -53,7 +52,7 @@ public class GetProductsController : ControllerBase
     [ProducesEntityNotFound]
     public async Task<ActionResult<ProductView>> GetProductByName(string name)
     {
-        Product product = await _productService.GetProduct(ProductStrictFilterProperty.Name, name);
+        Product product = await _productService.GetProduct(new ProductStrictFilter(ProductStrictFilterProperty.Name, name));
         ProductView productView = _mapper.MapProduct(product);
         
         return Ok(productView);

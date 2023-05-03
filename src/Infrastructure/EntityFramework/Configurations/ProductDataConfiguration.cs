@@ -14,11 +14,7 @@ public class ProductDataConfiguration : IEntityTypeConfiguration<ProductData>
         
         Id();
         Name();
-        Description();
         Price();
-        PictureUrl();
-        ProductType();
-        Brand();
     }
 
     private void Id()
@@ -28,31 +24,11 @@ public class ProductDataConfiguration : IEntityTypeConfiguration<ProductData>
 
     private void Name()
     {
-        Builder.HasIndex(p => p.Name);
-    }
-
-    private void Description()
-    {
-        
+        Builder.HasIndex(p => p.Name).IsUnique();
     }
 
     private void Price()
     {
         Builder.Property(p => p.Price).HasColumnType("decimal(18,2)");
-    }
-
-    private void PictureUrl()
-    {
-        
-    }
-
-    private void ProductType()
-    {
-        
-    }
-
-    private void Brand()
-    {
-        
     }
 }

@@ -1,8 +1,6 @@
-﻿using Domain.Interfaces;
+﻿namespace Infrastructure.EntityFramework.Models;
 
-namespace Infrastructure.EntityFramework.Models;
-
-public class ProductData : IEntityComparable<ProductData>
+public class ProductData : IIdEquitable<ProductData>
 {
     public string Id { get; private set; }
     public string Name { get; private set; }

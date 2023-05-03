@@ -24,10 +24,10 @@ public class CreateProductsController : ControllerBase
 
     [HttpPost]
     [ProducesOk]
-    public async Task<ActionResult<ProductView>> CreateProduct(CreateProductCommandView commandView)
+    public async Task<ActionResult<ProductView>> CreateProduct(CreateProductRequestView requestView)
     {
-        CreateProductCommand command = _mapper.MapCreateProductCommand(commandView);
-        Product product = await _productService.CreateNewProduct(command);
+        CreateProductRequest request = _mapper.MapCreateProductCommand(requestView);
+        Product product = await _productService.CreateNewProduct(request);
         ProductView productView = _mapper.MapProduct(product);
         return Ok(productView);
     }

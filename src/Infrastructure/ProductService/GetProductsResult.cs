@@ -2,7 +2,7 @@
 
 namespace Infrastructure.ProductService;
 
-public record GetProductsResult
+public class GetProductsResult
 {
     public List<Product> Products { get; }
     public int Total { get; }

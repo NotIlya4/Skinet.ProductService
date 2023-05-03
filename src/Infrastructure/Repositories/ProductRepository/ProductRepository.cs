@@ -4,9 +4,9 @@ using Infrastructure.EntityFramework.Models;
 using Infrastructure.FilteringSystem.Product;
 using Infrastructure.ProductService;
 using Infrastructure.Repositories.BrandRepository;
+using Infrastructure.Repositories.Exceptions;
 using Infrastructure.Repositories.Extensions;
 using Infrastructure.Repositories.ProductTypeRepository;
-using Infrastructure.SortingSystem;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.ProductRepository;
@@ -14,90 +14,82 @@ namespace Infrastructure.Repositories.ProductRepository;
 public class ProductRepository : IProductRepository
 {
     private readonly DataMapper _mapper;
-    private readonly ApplicationDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public ProductRepository(ApplicationDbContext dbContext, DataMapper mapper)
+    public ProductRepository(AppDbContext dbContext, DataMapper mapper)
     {
         _mapper = mapper;
         _dbContext = dbContext;
     }
 
-    public async Task<Product> GetProduct(ProductStrictFilter productStrictFilter)
+    public async Task<Product> GetProduct(ProductStrictFilter filter)
     {
-        ProductData productData = await _dbContext.GetProduct(productStrictFilter);
+        ProductData productData = await _dbContext.GetProduct(filter);
         return _mapper.MapProduct(productData);
     }
 
-    public async Task<List<Product>> GetProducts(GetProductsQuery getProductsQuery)
+    public async Task<List<Product>> GetProducts(GetProductsRequest getProductsRequest)
     {
-        IQueryable<ProductData> query = _dbContext
-            .Products
-            .IncludeProductDependencies();
-
-        IQueryable<ProductData> sortedQuery = query.ApplySorting(getProductsQuery.SortingCollection.PrimarySorting,
-            getProductsQuery.SortingCollection.SecondarySortings.Select(s => (ISorting)s).ToList());
-
-        sortedQuery = ApplyFiltering(sortedQuery, getProductsQuery.FluentFilters);
-
-        List<ProductData> productDatas = await sortedQuery
-            .ApplyPagination(getProductsQuery.Pagination)
-            .ToListAsync();
+        List<ProductData> productDatas = await _dbContext.GetProducts(getProductsRequest);
         return _mapper.MapProduct(productDatas);
     }
 
-    public async Task<int> GetProductsCountForFilters(ProductFluentFilters fluentFilters)
+    public async Task<int> GetCount(ProductFluentFilters filters)
     {
-        IQueryable<ProductData> query = _dbContext
-            .Products
-            .AsNoTracking()
-            .IncludeProductDependencies();
-
-        query = ApplyFiltering(query, fluentFilters);
-
-        return await query.CountAsync();
-    }
-
-    private IQueryable<ProductData> ApplyFiltering(IQueryable<ProductData> query, ProductFluentFilters fluentFilters)
-    {
-        if (fluentFilters.ProductTypeName is not null)
-        {
-            query = query.Where(p => p.ProductType.Name.Equals(fluentFilters.ProductTypeName.Value));
-        }
-        
-        if (fluentFilters.BrandName is not null)
-        {
-            query = query.Where(p => p.Brand.Name.Equals(fluentFilters.BrandName.Value));
-        }
-
-        if (fluentFilters.Searching is not null)
-        {
-            query = query.Where(p => p.Name.Contains(fluentFilters.Searching.Value));
-        }
-
-        return query;
+        return await _dbContext.Products
+            .IncludeProductDependencies()
+            .ApplyFluentFilters(filters)
+            .CountAsync();
     }
 
     public async Task Insert(Product product)
     {
-        BrandData brandData = await _dbContext.GetBrand(product.Brand);
-        ProductTypeData productTypeData = await _dbContext.GetProductType(product.ProductType);
-        
-        ProductData productData = _mapper.MapProduct(product, productTypeData, brandData);
+        try
+        {
+            await GetProduct(new ProductStrictFilter(ProductStrictFilterProperty.Id, product.Id.ToString()));
+            await Update(product);
+        }
+        catch (EntityNotFoundException)
+        {
+            await Add(product);
+        }
+    }
 
-        SetProductEntry(productData);
+    private async Task Update(Product product)
+    {
+        ProductData productData = await Map(product);
 
-        await _dbContext.Products.AddAsync(productData);
+        _dbContext.Products.Update(productData);
+        await _dbContext.SaveChangesAsync();
+    }
+    
+    private async Task Add(Product product)
+    {
+        ProductData productData = await Map(product);
+
+        _dbContext.Products.Add(productData);
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task Delete(ProductStrictFilter productStrictFilter)
+    public async Task Delete(ProductStrictFilter filter)
     {
-        ProductData productData = await _dbContext.GetProduct(productStrictFilter);
+        ProductData productData = await _dbContext.GetProduct(filter);
         
         SetProductEntry(productData);
         
         _dbContext.Products.Remove(productData);
         await _dbContext.SaveChangesAsync();
+    }
+
+    private async Task<ProductData> Map(Product product)
+    {
+        BrandData brandData = await _dbContext.GetBrand(product.Brand);
+        ProductTypeData productTypeData = await _dbContext.GetProductType(product.ProductType);
+        
+        ProductData productData = _mapper.MapProduct(product, productTypeData, brandData);
+        SetProductEntry(productData);
+
+        return productData;
     }
 
     private void SetProductEntry(ProductData productData)

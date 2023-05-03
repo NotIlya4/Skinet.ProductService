@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using IntegrationTests.Extensions;
+using Newtonsoft.Json.Linq;
 
 namespace IntegrationTests.Clients;
 

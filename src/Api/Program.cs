@@ -10,7 +10,7 @@ services.AddServices();
 services.AddRepositories();
 services.AddMappers();
 services.AddAppDbContext(parametersProvider.GetSqlServer());
-services.AddExceptionCatcherMiddlewareServicesConfigured();
+services.AddConfiguredExceptionCatcherMiddlewareServices();
 services.AddConfiguredSwaggerGen();
 services.AddConfiguredCors();
 

@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.SortingSystem;
 
-public record Sorting : ISorting
+public record Sorting
 {
     public string PropertyName { get; }
     public SortingSide SortingSide { get; }

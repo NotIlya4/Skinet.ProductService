@@ -1,19 +1,23 @@
-﻿namespace Infrastructure.SortingSystem.Product;
+﻿using Infrastructure.Misc;
 
-public record ProductSorting : ISorting
+namespace Infrastructure.SortingSystem.Product;
+
+public record ProductSorting
 {
-    public string PropertyName { get; }
+    public ProductSortingProperty PropertyName { get; }
     public SortingSide SortingSide { get; }
+    public Sorting Sorting { get; }
+
+    public ProductSorting(string propertyName, SortingSide sortingSide)
+        : this(EnumParser.Parse<ProductSortingProperty>(propertyName), sortingSide)
+    {
+        
+    }
 
     public ProductSorting(ProductSortingProperty property, SortingSide sortingSide)
     {
-        PropertyName = property.ToString();
+        PropertyName = property;
         SortingSide = sortingSide;
-    }
-
-    public ProductSorting(string propertyName, SortingSide sortingSide)
-        : this(Enum.Parse<ProductSortingProperty>(propertyName, true), sortingSide)
-    {
-        
+        Sorting = new Sorting(property.ToString(), sortingSide);
     }
 }

@@ -1,10 +1,10 @@
 ﻿using Api.Controllers.ProductsControllers.Helpers;
 using Api.ExceptionCatching;
-using Api.SwaggerMakeAllRequiredFilters;
 using Domain.Exceptions;
 using ExceptionCatcherMiddleware.Extensions;
 using ExceptionCatcherMiddleware.Options;
 using Infrastructure.EntityFramework;
+using Infrastructure.EntityFramework.Models;
 using Infrastructure.ProductService;
 using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.Exceptions;
@@ -32,7 +32,7 @@ public static class DiExtensions
 
     public static void AddAppDbContext(this IServiceCollection serviceCollection, string connectionString)
     {
-        serviceCollection.AddDbContext<ApplicationDbContext>(builder =>
+        serviceCollection.AddDbContext<AppDbContext>(builder =>
         {
             builder.UseSqlServer(connectionString, b => b.MigrationsAssembly("Infrastructure"));
             builder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
@@ -52,7 +52,7 @@ public static class DiExtensions
         });
     }
 
-    public static void AddExceptionCatcherMiddlewareServicesConfigured(this IServiceCollection serviceCollection)
+    public static void AddConfiguredExceptionCatcherMiddlewareServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddExceptionCatcherMiddlewareServices(optionsBuilder =>
         {
@@ -74,7 +74,6 @@ public static class DiExtensions
         serviceCollection.AddSwaggerGen(options =>
         {
             options.DescribeAllParametersInCamelCase();
-            options.AddRequiredFilters();
             options.AddEnricherFilters();
             options.EnableAnnotations();
         });

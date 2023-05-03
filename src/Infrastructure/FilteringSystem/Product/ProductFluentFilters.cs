@@ -4,14 +4,14 @@ namespace Infrastructure.FilteringSystem.Product;
 
 public record ProductFluentFilters
 {
-    public Name? ProductTypeName { get; }
-    public Name? BrandName { get; }
+    public Name? ProductType { get; }
+    public Name? Brand { get; }
     public Name? Searching { get; }
     
-    public ProductFluentFilters(Name? productTypeName, Name? brandName, Name? searching)
+    public ProductFluentFilters(Name? productType = null, Name? brand = null, Name? searching = null)
     {
-        ProductTypeName = productTypeName;
-        BrandName = brandName;
+        ProductType = productType;
+        Brand = brand;
         Searching = searching;
     }
 }

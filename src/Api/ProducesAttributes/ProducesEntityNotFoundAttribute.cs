@@ -1,4 +1,4 @@
-﻿using Api.ExceptionViews;
+﻿using Api.ProducesAttributes.ExceptionViews;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.ProducesAttributes;

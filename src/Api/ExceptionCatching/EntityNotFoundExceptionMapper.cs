@@ -10,7 +10,7 @@ public class EntityNotFoundExceptionMapper : IExceptionMapper<EntityNotFoundExce
         return new BadResponse()
         {
             StatusCode = StatusCodes.Status404NotFound,
-            ResponseDto = new BadResponseDto()
+            ResponseDto = new
             {
                 Title = "Entity not found",
                 Detail = exception.Message

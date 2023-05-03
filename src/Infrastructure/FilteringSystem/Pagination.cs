@@ -7,6 +7,11 @@ public record Pagination
 
     public static int MaxLimit => 50;
 
+    public Pagination() : this(0, MaxLimit)
+    {
+        
+    }
+    
     public Pagination(int offset, int limit)
     {
         if (offset < 0)

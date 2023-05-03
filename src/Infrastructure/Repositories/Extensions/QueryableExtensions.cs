@@ -14,9 +14,9 @@ public static class QueryableExtensions
         return await query.FirstOrDefaultAsync(predicate) ?? throw new EntityNotFoundException(typeof(TEntity).Name);
     }
     
-    public static async Task<TEntity> FirstAsyncOrThrow<TEntity>(this IQueryable<TEntity> query, IStrictFilter strictFilter)
+    public static async Task<TEntity> FirstAsyncOrThrow<TEntity>(this IQueryable<TEntity> query, string propertyName, string value)
     {
-        query = query.Where($"{strictFilter.PropertyName} == @0", strictFilter.ExpectedValue);
+        query = query.Where($"{propertyName} == @0", value);
         return await query.FirstOrDefaultAsync() ?? throw new EntityNotFoundException(typeof(TEntity).Name);
     }
 
@@ -27,15 +27,15 @@ public static class QueryableExtensions
             .Take(pagination.Limit);
     }
     
-    public static IQueryable<TEntity> ApplySorting<TEntity>(this IQueryable<TEntity> query, ISorting primarySorting,
-        IEnumerable<ISorting>? secondarySortings = null)
+    public static IQueryable<TEntity> ApplySorting<TEntity>(this IQueryable<TEntity> query, Sorting primarySorting,
+        IEnumerable<Sorting>? secondarySortings = null)
     {
-        string BuildOrderString(ISorting sortingInfo)
+        string BuildOrderBy(Sorting sortingInfo)
         {
             return $"{sortingInfo.PropertyName} {sortingInfo.SortingSide}";
         }
         
-        IOrderedQueryable<TEntity> orderedQueryable = query.OrderBy(BuildOrderString(primarySorting));
+        IOrderedQueryable<TEntity> orderedQueryable = query.OrderBy(BuildOrderBy(primarySorting));
 
         if (secondarySortings is null)
         {
@@ -45,7 +45,7 @@ public static class QueryableExtensions
         foreach (var secondarySorting in secondarySortings)
         {
             orderedQueryable =
-                orderedQueryable.ThenBy(BuildOrderString(secondarySorting));
+                orderedQueryable.ThenBy(BuildOrderBy(secondarySorting));
         }
 
         return orderedQueryable;

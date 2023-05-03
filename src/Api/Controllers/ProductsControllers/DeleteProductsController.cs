@@ -1,5 +1,4 @@
 ﻿using Api.ProducesAttributes;
-using Api.SwaggerEnrichers.ProductStrictFilterView;
 using Infrastructure.FilteringSystem.Product;
 using Infrastructure.ProductService;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +24,7 @@ public class DeleteProductsController : ControllerBase
     [ProducesNoContent]
     public async Task<IActionResult> DeleteProductById(string id)
     {
-        await _productService.DeleteProduct(ProductStrictFilterProperty.Id, id);
+        await _productService.DeleteProduct(new ProductStrictFilter(ProductStrictFilterProperty.Id, id));
         return NoContent();
     }
     
@@ -35,7 +34,7 @@ public class DeleteProductsController : ControllerBase
     [ProducesNoContent]
     public async Task<IActionResult> DeleteProductByName(string name)
     {
-        await _productService.DeleteProduct(ProductStrictFilterProperty.Name, name);
+        await _productService.DeleteProduct(new ProductStrictFilter(ProductStrictFilterProperty.Name, name));
         return NoContent();
     }
 }

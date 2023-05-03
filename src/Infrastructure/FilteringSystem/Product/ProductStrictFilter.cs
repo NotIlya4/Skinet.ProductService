@@ -1,19 +1,21 @@
-﻿namespace Infrastructure.FilteringSystem.Product;
+﻿using Infrastructure.Misc;
 
-public record ProductStrictFilter : IStrictFilter
+namespace Infrastructure.FilteringSystem.Product;
+
+public record ProductStrictFilter
 {
     public ProductStrictFilterProperty Property { get; }
     public string PropertyName => Property.ToString();
-    public string ExpectedValue { get; }
+    public string Value { get; }
 
-    public ProductStrictFilter(ProductStrictFilterProperty productProperty, string expectedValue)
+    public ProductStrictFilter(ProductStrictFilterProperty productProperty, string value)
     {
         Property = productProperty;
-        ExpectedValue = expectedValue;
+        Value = value;
     }
 
-    public ProductStrictFilter(string productPropertyName, string expectedValue) 
-        : this(Enum.Parse<ProductStrictFilterProperty>(productPropertyName, true), expectedValue)
+    public ProductStrictFilter(string productPropertyName, string value) 
+        : this(EnumParser.Parse<ProductStrictFilterProperty>(productPropertyName), value)
     {
         
     }

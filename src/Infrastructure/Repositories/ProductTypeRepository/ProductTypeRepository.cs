@@ -9,15 +9,15 @@ namespace Infrastructure.Repositories.ProductTypeRepository;
 public class ProductTypeRepository : IProductTypeRepository
 {
     private readonly DataMapper _mapper;
-    private readonly ApplicationDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public ProductTypeRepository(ApplicationDbContext dbContext, DataMapper mapper)
+    public ProductTypeRepository(AppDbContext dbContext, DataMapper mapper)
     {
         _mapper = mapper;
         _dbContext = dbContext;
     }
 
-    public async Task<List<Name>> GetProductTypes()
+    public async Task<List<Name>> Get()
     {
         List<ProductTypeData> productTypeDatas = await _dbContext.ProductTypes.OrderBy(pt => pt.Name).ToListAsync();
         return _mapper.MapProductType(productTypeDatas);
@@ -25,7 +25,7 @@ public class ProductTypeRepository : IProductTypeRepository
 
     public async Task Add(Name productType)
     {
-        ProductTypeData productTypeData = _mapper.MapProductType(Guid.NewGuid(), productType);
+        ProductTypeData productTypeData = _mapper.MapProductType(0, productType);
         _dbContext.SetEntry(productTypeData);
         
         await _dbContext.ProductTypes.AddAsync(productTypeData);
@@ -34,9 +34,7 @@ public class ProductTypeRepository : IProductTypeRepository
 
     public async Task Delete(Name productType)
     {
-        ProductTypeData productTypeData = await _dbContext.ProductTypes.FirstAsyncOrThrow(p => p.Name == productType.Value);
-        _dbContext.SetEntry(productTypeData);
-        
+        ProductTypeData productTypeData = await _dbContext.GetProductType(productType);
         _dbContext.ProductTypes.Remove(productTypeData);
         await _dbContext.SaveChangesAsync();
     }

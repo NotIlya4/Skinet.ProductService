@@ -12,7 +12,7 @@ public record Description
 
     public Description(string? value)
     {
-        void ThrowLengthException([NotNull] string? value)
+        void ThrowLengthException([NotNull] string? v)
         {
             throw new DomainValidationException($"Description must has characters count between " +
                                                 $"{DescriptionMinLength} and {DescriptionMaxLength}");

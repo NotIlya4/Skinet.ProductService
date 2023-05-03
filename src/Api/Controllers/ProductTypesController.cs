@@ -22,7 +22,7 @@ public class ProductTypesController : ControllerBase
     [ProducesOk]
     public async Task<ActionResult<IEnumerable<string>>> GetProductTypes()
     {
-        List<Name> productTypes = await _productTypeRepository.GetProductTypes();
+        List<Name> productTypes = await _productTypeRepository.Get();
         return Ok(productTypes.Select(p => p.Value));
     }
 

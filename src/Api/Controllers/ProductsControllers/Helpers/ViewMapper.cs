@@ -51,24 +51,24 @@ public class ViewMapper
         return products.Select(MapProduct).ToList();
     }
 
-    public CreateProductCommand MapCreateProductCommand(CreateProductCommandView view)
+    public CreateProductRequest MapCreateProductCommand(CreateProductRequestView view)
     {
-        return new CreateProductCommand(name: new Name(view.Name), description: new Description(view.Description),
+        return new CreateProductRequest(name: new Name(view.Name), description: new Description(view.Description),
             price: new Price(view.Price), pictureUrl: view.PictureUrl, productType: new Name(view.ProductType),
             brand: new Name(view.Brand));
     }
 
-    public GetProductsQuery MapGetProductsQuery(GetProductsQueryView view)
+    public GetProductsRequest MapGetProductsQuery(GetProductsRequestView view)
     {
         Name? productTypeName = view.ProductType is not null ? new Name(view.ProductType) : null;
         Name? brandName = view.Brand is not null ? new Name(view.Brand) : null;
         Name? searching = view.Searching is not null ? new Name(view.Searching) : null;
-        return new GetProductsQuery(
+        return new GetProductsRequest(
             pagination: new Pagination(offset: view.Offset, limit: view.Limit),
             sortingCollection: new ProductSortingCollection(_sortingInfoParser.ParseProductSortingInfo(view.Sortings)),
             fluentFilters: new ProductFluentFilters(
-                productTypeName: productTypeName,
-                brandName: brandName,
+                productType: productTypeName,
+                brand: brandName,
                 searching: searching));
     }
 

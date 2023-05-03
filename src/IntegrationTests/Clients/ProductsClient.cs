@@ -1,4 +1,5 @@
 ﻿using Api.Controllers.ProductsControllers.Views;
+using IntegrationTests.Extensions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
 
@@ -21,24 +22,24 @@ public class ProductsClient
         return await response.ExtractJObject();
     }
 
-    public async Task<JObject> GetProductsBase(GetProductsQueryView getProductsQueryView)
+    public async Task<JObject> GetProductsBase(GetProductsRequestView getProductsRequestView)
     {
         List<KeyValuePair<string, string?>> queryStringDict = new();
 
-        queryStringDict.Add(new("limit", getProductsQueryView.Limit.ToString()));
-        queryStringDict.Add(new("offset", getProductsQueryView.Offset.ToString()));
+        queryStringDict.Add(new("limit", getProductsRequestView.Limit.ToString()));
+        queryStringDict.Add(new("offset", getProductsRequestView.Offset.ToString()));
 
-        if (getProductsQueryView.Sortings is not null)
+        if (getProductsRequestView.Sortings is not null)
         {
-            foreach (var sorting in getProductsQueryView.Sortings)
+            foreach (var sorting in getProductsRequestView.Sortings)
             {
                 queryStringDict.Add(new("sortings", sorting));
             }
         }
 
-        queryStringDict.Add(new("productType", getProductsQueryView.ProductType));
-        queryStringDict.Add(new("brand", getProductsQueryView.Brand));
-        queryStringDict.Add(new("searching", getProductsQueryView.Searching));
+        queryStringDict.Add(new("productType", getProductsRequestView.ProductType));
+        queryStringDict.Add(new("brand", getProductsRequestView.Brand));
+        queryStringDict.Add(new("searching", getProductsRequestView.Searching));
 
         string? queryString = QueryString.Create(queryStringDict).Value;
 
@@ -48,15 +49,15 @@ public class ProductsClient
         return await response.ExtractJObject();
     }
 
-    public async Task<JArray> GetProducts(GetProductsQueryView getProductsQueryView)
+    public async Task<JArray> GetProducts(GetProductsRequestView getProductsRequestView)
     {
-        JObject response = await GetProductsBase(getProductsQueryView);
+        JObject response = await GetProductsBase(getProductsRequestView);
         return response["products"]?.Value<JArray>()!;
     }
     
-    public async Task<int> GetProductsTotal(GetProductsQueryView getProductsQueryView)
+    public async Task<int> GetProductsTotal(GetProductsRequestView getProductsRequestView)
     {
-        JObject response = await GetProductsBase(getProductsQueryView);
+        JObject response = await GetProductsBase(getProductsRequestView);
         return response.Int("total");
     }
 

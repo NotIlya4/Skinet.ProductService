@@ -1,5 +1,5 @@
-﻿using Infrastructure.Extensions;
-using Infrastructure.FilteringSystem.Product;
+﻿using Infrastructure.FilteringSystem.Product;
+using Infrastructure.Misc;
 using Microsoft.OpenApi.Models;
 using SwaggerEnrichers.CreateCustomEnrichers;
 

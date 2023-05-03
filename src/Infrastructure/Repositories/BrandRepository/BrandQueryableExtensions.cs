@@ -8,22 +8,23 @@ namespace Infrastructure.Repositories.BrandRepository;
 
 public static class BrandQueryableExtensions
 {
-    public static async Task<BrandData> GetBrand(this ApplicationDbContext dbContext, Name brand)
+    public static async Task<BrandData> GetBrand(this AppDbContext dbContext, Name brand)
     {
         return await dbContext.Brands.FirstAsyncOrThrow(b => b.Name == brand.Value);
     }
 
-    public static async Task EnsureBrandInTable(this ApplicationDbContext dbContext, BrandData brandData)
+    public static async Task EnsureBrandInTable(this AppDbContext dbContext, BrandData brandData)
     {
-        BrandData? dbBrand = await dbContext.Brands.FirstOrDefaultAsync(b => b.Id == brandData.Id);
+        BrandData? dbBrand = await dbContext.Brands.FirstOrDefaultAsync(b => b.Name == brandData.Name);
         if (dbBrand is null)
         {
-            await dbContext.Brands.AddAsync(brandData);
+            BrandData newBrandData = new BrandData(brandData.Id, brandData.Name);
+            await dbContext.Brands.AddAsync(newBrandData);
             await dbContext.SaveChangesAsync();
         }
     }
 
-    public static async Task EnsureBrandsInTable(this ApplicationDbContext dbContext, IEnumerable<BrandData> brandDatas)
+    public static async Task EnsureBrandsInTable(this AppDbContext dbContext, IEnumerable<BrandData> brandDatas)
     {
         foreach (var brandData in brandDatas)
         {

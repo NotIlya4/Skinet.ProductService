@@ -23,6 +23,6 @@ public class ProductTypeDataConfiguration : IEntityTypeConfiguration<ProductType
 
     private void Name()
     {
-        Builder.HasIndex(p => p.Name);
+        Builder.HasIndex(p => p.Name).IsUnique();
     }
 }

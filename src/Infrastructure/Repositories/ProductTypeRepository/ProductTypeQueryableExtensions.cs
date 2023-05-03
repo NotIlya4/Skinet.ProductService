@@ -8,22 +8,23 @@ namespace Infrastructure.Repositories.ProductTypeRepository;
 
 public static class ProductTypeQueryableExtensions
 {
-    public static async Task<ProductTypeData> GetProductType(this ApplicationDbContext dbContext, Name productType)
+    public static async Task<ProductTypeData> GetProductType(this AppDbContext dbContext, Name productType)
     {
         return await dbContext.ProductTypes.FirstAsyncOrThrow(p => p.Name == productType.Value);
     }
 
-    public static async Task EnsureProductTypeInTable(this ApplicationDbContext dbContext, ProductTypeData productTypeData)
+    public static async Task EnsureProductTypeInTable(this AppDbContext dbContext, ProductTypeData productTypeData)
     {
-        ProductTypeData? dbProductType = await dbContext.ProductTypes.FirstOrDefaultAsync(p => p.Id == productTypeData.Id);
+        ProductTypeData? dbProductType = await dbContext.ProductTypes.FirstOrDefaultAsync(p => p.Name == productTypeData.Name);
         if (dbProductType is null)
         {
-            await dbContext.ProductTypes.AddAsync(productTypeData);
+            ProductTypeData newProductType = new ProductTypeData(productTypeData.Id, productTypeData.Name);
+            await dbContext.ProductTypes.AddAsync(newProductType);
             await dbContext.SaveChangesAsync();
         }
     }
 
-    public static async Task EnsureProductTypesInTable(this ApplicationDbContext dbContext, IEnumerable<ProductTypeData> productTypeDatas)
+    public static async Task EnsureProductTypesInTable(this AppDbContext dbContext, IEnumerable<ProductTypeData> productTypeDatas)
     {
         foreach (var productTypeData in productTypeDatas)
         {

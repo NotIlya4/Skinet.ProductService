@@ -9,15 +9,15 @@ namespace Infrastructure.Repositories.BrandRepository;
 public class BrandRepository : IBrandRepository
 {
     private readonly DataMapper _mapper;
-    private readonly ApplicationDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public BrandRepository(ApplicationDbContext dbContext, DataMapper mapper)
+    public BrandRepository(AppDbContext dbContext, DataMapper mapper)
     {
         _mapper = mapper;
         _dbContext = dbContext;
     }
 
-    public async Task<List<Name>> GetBrands()
+    public async Task<List<Name>> Get()
     {
         List<BrandData> brandDatas = await _dbContext.Brands.OrderBy(b => b.Name).ToListAsync();
         return _mapper.MapBrand(brandDatas);
@@ -25,7 +25,7 @@ public class BrandRepository : IBrandRepository
 
     public async Task Add(Name brand)
     {
-        BrandData brandData = _mapper.MapBrand(Guid.NewGuid(), brand);
+        BrandData brandData = _mapper.MapBrand(0, brand);
         _dbContext.SetEntry(brandData);
         
         await _dbContext.Brands.AddAsync(brandData);

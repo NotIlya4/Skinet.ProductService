@@ -22,7 +22,7 @@ public class BrandsController : ControllerBase
     [ProducesOk]
     public async Task<ActionResult<List<string>>> GetBrands()
     {
-        List<Name> brands = await _brandRepository.GetBrands();
+        List<Name> brands = await _brandRepository.Get();
         return Ok(brands.Select(b => b.Value).ToList());
     }
 

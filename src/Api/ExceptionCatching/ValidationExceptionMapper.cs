@@ -10,7 +10,7 @@ public class ValidationExceptionMapper : IExceptionMapper<DomainValidationExcept
         return new BadResponse()
         {
             StatusCode = 400,
-            ResponseDto = new BadResponseDto()
+            ResponseDto = new
             {
                 Title = "Validation exception",
                 Detail = exception.Message

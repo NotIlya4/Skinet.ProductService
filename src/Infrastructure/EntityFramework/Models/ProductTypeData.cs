@@ -1,13 +1,11 @@
-﻿using Domain.Interfaces;
+﻿namespace Infrastructure.EntityFramework.Models;
 
-namespace Infrastructure.EntityFramework.Models;
-
-public class ProductTypeData : IEntityComparable<ProductTypeData>
+public class ProductTypeData : IIdEquitable<ProductTypeData>
 {
-    public string Id { get; private set; }
+    public int Id { get; private set; }
     public string Name { get; private set; }
 
-    public ProductTypeData(string id, string name)
+    public ProductTypeData(int id, string name)
     {
         Id = id;
         Name = name;
@@ -15,7 +13,6 @@ public class ProductTypeData : IEntityComparable<ProductTypeData>
 
     private ProductTypeData()
     {
-        Id = null!;
         Name = null!;
     }
 

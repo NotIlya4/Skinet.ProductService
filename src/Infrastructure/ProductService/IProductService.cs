@@ -5,8 +5,8 @@ namespace Infrastructure.ProductService;
 
 public interface IProductService
 {
-    public Task<GetProductsResult> GetProducts(GetProductsQuery query);
-    public Task<Product> GetProduct(ProductStrictFilterProperty property, string value);
-    public Task<Product> CreateNewProduct(CreateProductCommand createProductCommand);
-    public Task DeleteProduct(ProductStrictFilterProperty property, string value);
+    public Task<GetProductsResult> GetProducts(GetProductsRequest request);
+    public Task<Product> GetProduct(ProductStrictFilter filter);
+    public Task<Product> CreateNewProduct(CreateProductRequest request);
+    public Task DeleteProduct(ProductStrictFilter filter);
 }

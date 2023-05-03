@@ -24,6 +24,6 @@ public class BrandDataConfiguration : IEntityTypeConfiguration<BrandData>
 
     private void Name()
     {
-        Builder.HasIndex(b => b.Name);
+        Builder.HasIndex(b => b.Name).IsUnique();
     }
 }

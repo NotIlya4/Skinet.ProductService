@@ -1,9 +1,8 @@
-using Domain.Interfaces;
 using Domain.Primitives;
 
 namespace Domain.Entities;
 
-public record Product : IEntityComparable<Product>
+public record Product
 {
     public Guid Id { get; }
     public Name Name { get; }
@@ -22,10 +21,5 @@ public record Product : IEntityComparable<Product>
         PictureUrl = pictureUrl;
         ProductType = productType;
         Brand = brand;
-    }
-
-    public bool EqualId(Product entity)
-    {
-        return Id.Equals(entity.Id);
     }
 }

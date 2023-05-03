@@ -6,9 +6,9 @@ namespace Infrastructure.Repositories.ProductRepository;
 
 public interface IProductRepository
 {
-    public Task<Product> GetProduct(ProductStrictFilter productStrictFilter);
-    public Task<List<Product>> GetProducts(GetProductsQuery query);
-    public Task<int> GetProductsCountForFilters(ProductFluentFilters fluentFilters);
+    public Task<Product> GetProduct(ProductStrictFilter filter);
+    public Task<List<Product>> GetProducts(GetProductsRequest request);
+    public Task<int> GetCount(ProductFluentFilters filters);
     public Task Insert(Product product);
-    public Task Delete(ProductStrictFilter productStrictFilter);
+    public Task Delete(ProductStrictFilter filter);
 }

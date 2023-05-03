@@ -18,15 +18,13 @@ public class ProductTypesList
 
     public ProductTypesList()
     {
-        string smartphoneId = "f68d9bd6-e7c5-4f50-8147-d5b85b292bcf";
         string smartphoneName = "Smartphone";
         Smartphone = new Name(smartphoneName);
-        SmartphoneData = new ProductTypeData(id: smartphoneId, name: smartphoneName);
+        SmartphoneData = new ProductTypeData(id: 0, name: smartphoneName);
 
-        string burgerId = "70a4fa45-b9f9-4409-8d13-c55dabfa3169";
         string burgerName = "Burger";
         Burger = new Name(burgerName);
-        BurgerData = new ProductTypeData(id: burgerId, name: burgerName);
+        BurgerData = new ProductTypeData(id: 0, name: burgerName);
 
         ProductTypes = new List<Name>()
         {

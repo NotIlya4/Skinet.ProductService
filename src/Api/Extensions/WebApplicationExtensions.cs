@@ -1,6 +1,6 @@
 ﻿using Api.Properties;
-using Infrastructure.EntityFramework;
-using Infrastructure.EntityFramework.Seeder;
+using Infrastructure.EntityFramework.DbMigratingAndSeeding;
+using Infrastructure.EntityFramework.DbMigratingAndSeeding.DataLists;
 
 namespace Api.Extensions;
 
