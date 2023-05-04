@@ -8,7 +8,7 @@ namespace Infrastructure.Repositories.ProductTypeRepository;
 
 public static class ProductTypeQueryableExtensions
 {
-    public static async Task<ProductTypeData> GetProductType(this AppDbContext dbContext, Name productType)
+    public static async Task<ProductTypeData> GetProductType(this AppDbContext dbContext, ProductType productType)
     {
         return await dbContext.ProductTypes.FirstAsyncOrThrow(p => p.Name == productType.Value);
     }

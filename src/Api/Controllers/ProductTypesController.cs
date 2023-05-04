@@ -22,7 +22,7 @@ public class ProductTypesController : ControllerBase
     [ProducesOk]
     public async Task<ActionResult<IEnumerable<string>>> GetProductTypes()
     {
-        List<Name> productTypes = await _productTypeRepository.Get();
+        List<ProductType> productTypes = await _productTypeRepository.Get();
         return Ok(productTypes.Select(p => p.Value));
     }
 
@@ -31,7 +31,7 @@ public class ProductTypesController : ControllerBase
     [ProducesNoContent]
     public async Task<ActionResult> Add(string productType)
     {
-        await _productTypeRepository.Add(new Name(productType));
+        await _productTypeRepository.Add(new ProductType(productType));
         return NoContent();
     }
 
@@ -40,7 +40,7 @@ public class ProductTypesController : ControllerBase
     [ProducesNoContent]
     public async Task<ActionResult> Delete(string productType)
     {
-        await _productTypeRepository.Delete(new Name(productType));
+        await _productTypeRepository.Delete(new ProductType(productType));
         return NoContent();
     }
 }

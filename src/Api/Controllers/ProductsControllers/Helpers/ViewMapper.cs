@@ -3,7 +3,7 @@ using Domain.Entities;
 using Domain.Primitives;
 using Infrastructure.FilteringSystem;
 using Infrastructure.FilteringSystem.Product;
-using Infrastructure.ProductService;
+using Infrastructure.ProductService.Views;
 using Infrastructure.SortingSystem.Product;
 
 namespace Api.Controllers.ProductsControllers.Helpers;
@@ -25,8 +25,8 @@ public class ViewMapper
             description: new Description(productData.Description),
             price: new Price(productData.Price),
             pictureUrl: productData.PictureUrl,
-            productType: new Name(productData.ProductType),
-            brand: new Name(productData.Brand));
+            productType: new ProductType(productData.ProductType),
+            brand: new Brand(productData.Brand));
     }
 
     public List<Product> MapProduct(IEnumerable<ProductView> productViews)
@@ -53,9 +53,13 @@ public class ViewMapper
 
     public CreateProductRequest MapCreateProductRequest(CreateProductRequestView view)
     {
-        return new CreateProductRequest(name: new Name(view.Name), description: new Description(view.Description),
-            price: new Price(view.Price), pictureUrl: view.PictureUrl, productType: new Name(view.ProductType),
-            brand: new Name(view.Brand));
+        return new CreateProductRequest(
+            name: new Name(view.Name), 
+            description: new Description(view.Description),
+            price: new Price(view.Price), 
+            pictureUrl: view.PictureUrl, 
+            productType: new ProductType(view.ProductType),
+            brand: new Brand(view.Brand));
     }
 
     public GetProductsRequest MapGetProductsRequest(GetProductsRequestView view)
@@ -73,15 +77,10 @@ public class ViewMapper
 
     private ProductFluentFilters MapProductFluentFilters(string? productType, string? brand, string? searching)
     {
-        Name? ToName(string? value)
-        {
-            return value is not null ? new Name(value) : null;
-        }
-
         return new ProductFluentFilters(
-            productType: ToName(productType),
-            brand: ToName(brand),
-            searching: ToName(searching));
+            productType: productType is not null ? new ProductType(productType) : null,
+            brand: brand is not null ? new Brand(brand) : null,
+            searching: searching is not null ? new Name(searching) : null);
     }
 
     public GetProductsResultView MapGetProductsResult(GetProductsResult getProductsResult)

@@ -22,7 +22,7 @@ public class BrandsController : ControllerBase
     [ProducesOk]
     public async Task<ActionResult<List<string>>> GetBrands()
     {
-        List<Name> brands = await _brandRepository.Get();
+        List<Brand> brands = await _brandRepository.Get();
         return Ok(brands.Select(b => b.Value).ToList());
     }
 
@@ -31,7 +31,7 @@ public class BrandsController : ControllerBase
     [ProducesNoContent]
     public async Task<ActionResult> Add(string brand)
     {
-        await _brandRepository.Add(new Name(brand));
+        await _brandRepository.Add(new Brand(brand));
         return NoContent();
     }
 
@@ -40,7 +40,7 @@ public class BrandsController : ControllerBase
     [ProducesNoContent]
     public async Task<ActionResult> Delete(string brand)
     {
-        await _brandRepository.Delete(new Name(brand));
+        await _brandRepository.Delete(new Brand(brand));
         return NoContent();
     }
 }

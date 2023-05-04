@@ -10,7 +10,7 @@ public class ProductTypeRepositoryTests : IDisposable
 {
     private readonly IProductTypeRepository _repository;
     private readonly IServiceScope _scope;
-    private readonly List<Name> _productTypes;
+    private readonly List<ProductType> _productTypes;
     private readonly AppFixture _fixture;
 
     public ProductTypeRepositoryTests(AppFixture fixture)
@@ -24,7 +24,7 @@ public class ProductTypeRepositoryTests : IDisposable
     [Fact]
     public async Task Get_SeededEntities_ThatSeededEntities()
     {
-        List<Name> result = await _repository.Get();
+        List<ProductType> result = await _repository.Get();
         
         Assert.Equal(_productTypes, result);
     }
@@ -32,11 +32,11 @@ public class ProductTypeRepositoryTests : IDisposable
     [Fact]
     public async Task Add_AddNewProductType_SeededProductTypesWithNewOneInAlphabeticalOrder()
     {
-        Name newProductType = new Name("Duck");
+        var newProductType = new ProductType("Duck");
         _productTypes.Insert(1, newProductType);
         await _repository.Add(newProductType);
 
-        List<Name> result = await _repository.Get();
+        List<ProductType> result = await _repository.Get();
         
         Assert.Equal(_productTypes, result);
         
@@ -48,7 +48,7 @@ public class ProductTypeRepositoryTests : IDisposable
     {
         await Assert.ThrowsAsync<DbUpdateException>(async () =>
         {
-            await _repository.Add(new Name("Smartphone"));
+            await _repository.Add(new ProductType("Smartphone"));
             await _fixture.ReloadDb();
         });
     }
@@ -56,10 +56,10 @@ public class ProductTypeRepositoryTests : IDisposable
     [Fact]
     public async Task Delete_ExistingProductType_SeededProductTypesWithoutDeletedOne()
     {
-        _productTypes.Remove(new Name("Smartphone"));
-        await _repository.Delete(new Name("Smartphone"));
+        _productTypes.Remove(new ProductType("Smartphone"));
+        await _repository.Delete(new ProductType("Smartphone"));
 
-        List<Name> result = await _repository.Get();
+        List<ProductType> result = await _repository.Get();
         
         Assert.Equal(_productTypes, result);
         

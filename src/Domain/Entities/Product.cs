@@ -9,10 +9,10 @@ public record Product
     public Description Description { get; }
     public Price Price { get; }
     public Uri PictureUrl { get; }
-    public Name ProductType { get; }
-    public Name Brand { get; }
+    public ProductType ProductType { get; }
+    public Brand Brand { get; }
 
-    public Product(Guid id, Name name, Description description, Price price, Uri pictureUrl, Name productType, Name brand)
+    public Product(Guid id, Name name, Description description, Price price, Uri pictureUrl, ProductType productType, Brand brand)
     {
         Id = id;
         Name = name;

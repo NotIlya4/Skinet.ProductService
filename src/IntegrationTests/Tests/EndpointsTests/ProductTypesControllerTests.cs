@@ -1,5 +1,4 @@
 ﻿using IntegrationTests.Clients;
-using IntegrationTests.EntityLists;
 using Newtonsoft.Json.Linq;
 
 namespace IntegrationTests.Tests.EndpointsTests;

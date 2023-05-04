@@ -2,13 +2,13 @@
 
 namespace Domain.Primitives;
 
-public record Name
+public record ProductType
 {
     public string Value { get; }
 
-    public Name(string? value)
+    public ProductType(string? value)
     {
-        DomainValidationException.EnsureNotEmpty(value, nameof(Name));
+        DomainValidationException.EnsureNotEmpty(value, nameof(ProductType));
 
         Value = value;
     }

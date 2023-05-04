@@ -1,8 +1,7 @@
 ﻿using Api.Controllers.ProductsControllers.Views;
 using IntegrationTests.Clients;
-using Newtonsoft.Json.Linq;
 
-namespace IntegrationTests.Tests.EndpointsTests.ProductsControllerTests.GetProductsControllerTests;
+namespace IntegrationTests.Tests.EndpointsTests.ProductsControllerTests.GetProductsControllerGetProductsTests;
 
 [Collection(nameof(AppFixture))]
 public class GetProductsTotalCountTests

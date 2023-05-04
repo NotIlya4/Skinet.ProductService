@@ -10,7 +10,7 @@ public class BrandRepositoryTests : IDisposable
 {
     private readonly IBrandRepository _repository;
     private readonly IServiceScope _scope;
-    private readonly List<Name> _brands;
+    private readonly List<Brand> _brands;
     private readonly AppFixture _fixture;
 
     public BrandRepositoryTests(AppFixture fixture)
@@ -24,7 +24,7 @@ public class BrandRepositoryTests : IDisposable
     [Fact]
     public async Task Get_SeededEntities_ThatSeededEntities()
     {
-        List<Name> result = await _repository.Get();
+        List<Brand> result = await _repository.Get();
         
         Assert.Equal(_brands, result);
     }
@@ -32,11 +32,11 @@ public class BrandRepositoryTests : IDisposable
     [Fact]
     public async Task Add_AddNewBrand_SeededBrandsWithNewOneInAlphabeticalOrder()
     {
-        Name newBrand = new Name("EA");
+        var newBrand = new Brand("EA");
         _brands.Insert(1, newBrand);
         await _repository.Add(newBrand);
 
-        List<Name> result = await _repository.Get();
+        List<Brand> result = await _repository.Get();
         
         Assert.Equal(_brands, result);
         
@@ -48,7 +48,7 @@ public class BrandRepositoryTests : IDisposable
     {
         await Assert.ThrowsAsync<DbUpdateException>(async () =>
         {
-            await _repository.Add(new Name("Apple"));
+            await _repository.Add(new Brand("Apple"));
             await _fixture.ReloadDb();
         });
     }
@@ -56,10 +56,10 @@ public class BrandRepositoryTests : IDisposable
     [Fact]
     public async Task Delete_ExistingBrand_SeededBrandsWithoutDeletedOne()
     {
-        _brands.Remove(new Name("Apple"));
-        await _repository.Delete(new Name("Apple"));
+        _brands.Remove(new Brand("Apple"));
+        await _repository.Delete(new Brand("Apple"));
 
-        List<Name> result = await _repository.Get();
+        List<Brand> result = await _repository.Get();
         
         Assert.Equal(_brands, result);
         

@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Infrastructure.ProductService;
+namespace Infrastructure.ProductService.Views;
 
 public class GetProductsResult
 {

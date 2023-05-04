@@ -4,7 +4,7 @@ namespace Infrastructure.Repositories.BrandRepository;
 
 public interface IBrandRepository
 {
-    public Task<List<Name>> Get();
-    public Task Add(Name brand);
-    public Task Delete(Name brand);
+    public Task<List<Brand>> Get();
+    public Task Add(Brand brand);
+    public Task Delete(Brand brand);
 }

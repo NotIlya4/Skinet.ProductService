@@ -1,7 +1,6 @@
 ﻿using Api.Controllers.ProductsControllers.Views;
 using Infrastructure.FilteringSystem.Product;
 using IntegrationTests.Extensions;
-using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
 using UriQueryStringComposer;
 

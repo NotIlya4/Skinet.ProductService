@@ -2,7 +2,7 @@
 using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.Models;
 using Infrastructure.FilteringSystem.Product;
-using Infrastructure.ProductService;
+using Infrastructure.ProductService.Views;
 using Infrastructure.Repositories.BrandRepository;
 using Infrastructure.Repositories.Exceptions;
 using Infrastructure.Repositories.Extensions;

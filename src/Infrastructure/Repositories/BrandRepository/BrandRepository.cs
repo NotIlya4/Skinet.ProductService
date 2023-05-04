@@ -17,13 +17,13 @@ public class BrandRepository : IBrandRepository
         _dbContext = dbContext;
     }
 
-    public async Task<List<Name>> Get()
+    public async Task<List<Brand>> Get()
     {
         List<BrandData> brandDatas = await _dbContext.Brands.OrderBy(b => b.Name).ToListAsync();
         return _mapper.MapBrand(brandDatas);
     }
 
-    public async Task Add(Name brand)
+    public async Task Add(Brand brand)
     {
         BrandData brandData = _mapper.MapBrand(0, brand);
         _dbContext.SetEntry(brandData);
@@ -32,7 +32,7 @@ public class BrandRepository : IBrandRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task Delete(Name brand)
+    public async Task Delete(Brand brand)
     {
         BrandData brandData = await _dbContext.GetBrand(brand);
         _dbContext.Brands.Remove(brandData);

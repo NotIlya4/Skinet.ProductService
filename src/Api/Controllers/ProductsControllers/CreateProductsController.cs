@@ -3,6 +3,7 @@ using Api.Controllers.ProductsControllers.Views;
 using Api.ProducesAttributes;
 using Domain.Entities;
 using Infrastructure.ProductService;
+using Infrastructure.ProductService.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.ProductsControllers;

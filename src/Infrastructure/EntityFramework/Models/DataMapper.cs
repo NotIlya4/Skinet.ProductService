@@ -13,8 +13,8 @@ public class DataMapper
             description: new Description(productData.Description),
             price: new Price(productData.Price),
             pictureUrl: new Uri(productData.PictureUrl),
-            productType: new Name(productData.ProductType.Name),
-            brand: new Name(productData.Brand.Name));
+            productType: new ProductType(productData.ProductType.Name),
+            brand: new Brand(productData.Brand.Name));
     }
 
     public List<Product> MapProduct(IEnumerable<ProductData> productDatas)
@@ -34,37 +34,37 @@ public class DataMapper
             brand: brandData);
     }
 
-    public Name MapBrand(BrandData brandData)
+    public Brand MapBrand(BrandData brandData)
     {
-        return new Name(brandData.Name);
+        return new Brand(brandData.Name);
     }
 
-    public List<Name> MapBrand(IEnumerable<BrandData> brandDatas)
+    public List<Brand> MapBrand(IEnumerable<BrandData> brandDatas)
     {
         return brandDatas.Select(MapBrand).ToList();
     }
 
-    public BrandData MapBrand(int id, Name name)
+    public BrandData MapBrand(int id, Brand brand)
     {
         return new BrandData(
             id: id,
-            name: name.Value);
+            name: brand.Value);
     }
 
-    public Name MapProductType(ProductTypeData productTypeData)
+    public ProductType MapProductType(ProductTypeData productTypeData)
     {
-        return new Name(productTypeData.Name);
+        return new ProductType(productTypeData.Name);
     }
 
-    public List<Name> MapProductType(IEnumerable<ProductTypeData> productTypeDatas)
+    public List<ProductType> MapProductType(IEnumerable<ProductTypeData> productTypeDatas)
     {
         return productTypeDatas.Select(MapProductType).ToList();
     }
 
-    public ProductTypeData MapProductType(int id, Name name)
+    public ProductTypeData MapProductType(int id, ProductType productType)
     {
         return new ProductTypeData(
             id: id,
-            name: name.Value);
+            name: productType.Value);
     }
 }

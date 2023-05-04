@@ -2,11 +2,11 @@
 
 namespace Domain.Primitives;
 
-public record Name
+public record Brand
 {
     public string Value { get; }
 
-    public Name(string? value)
+    public Brand(string? value)
     {
         DomainValidationException.EnsureNotEmpty(value, nameof(Name));
 

@@ -3,7 +3,7 @@ using IntegrationTests.Clients;
 using IntegrationTests.EntityLists;
 using Newtonsoft.Json.Linq;
 
-namespace IntegrationTests.Tests.EndpointsTests.ProductsControllerTests.GetProductsControllerTests;
+namespace IntegrationTests.Tests.EndpointsTests.ProductsControllerTests.GetProductsControllerGetProductsTests;
 
 [Collection(nameof(AppFixture))]
 public class GetProductsFiltersTests

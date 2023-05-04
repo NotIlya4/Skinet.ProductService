@@ -1,5 +1,4 @@
 ﻿using Api.Controllers.ProductsControllers.Helpers;
-using Infrastructure.FilteringSystem.Product;
 using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Product;
 

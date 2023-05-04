@@ -8,7 +8,7 @@ namespace Infrastructure.Repositories.BrandRepository;
 
 public static class BrandQueryableExtensions
 {
-    public static async Task<BrandData> GetBrand(this AppDbContext dbContext, Name brand)
+    public static async Task<BrandData> GetBrand(this AppDbContext dbContext, Brand brand)
     {
         return await dbContext.Brands.FirstAsyncOrThrow(b => b.Name == brand.Value);
     }

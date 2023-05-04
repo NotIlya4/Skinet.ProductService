@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Infrastructure.FilteringSystem.Product;
+using Infrastructure.ProductService.Views;
 using Infrastructure.Repositories.ProductRepository;
 
 namespace Infrastructure.ProductService;

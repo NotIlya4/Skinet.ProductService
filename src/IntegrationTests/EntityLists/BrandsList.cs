@@ -6,27 +6,27 @@ namespace IntegrationTests.EntityLists;
 
 public class BrandsList
 {
-    public Name Apple { get; }
+    public Brand Apple { get; }
     public BrandData AppleData { get; }
     
-    public Name McDonalds { get; }
+    public Brand McDonalds { get; }
     public BrandData McDonaldsData { get; }
 
-    public IReadOnlyList<Name> Brands { get; }
+    public IReadOnlyList<Brand> Brands { get; }
     public IReadOnlyList<BrandData> BrandDatas { get; }
     public JArray BrandsJArray { get; }
 
     public BrandsList()
     {
         string appleName = "Apple";
-        Apple = new Name(appleName);
+        Apple = new Brand(appleName);
         AppleData = new BrandData(id: 0, name: appleName);
 
         string mcDonaldsName = "McDonald's";
-        McDonalds = new Name(mcDonaldsName);
+        McDonalds = new Brand(mcDonaldsName);
         McDonaldsData = new BrandData(id: 0, name: mcDonaldsName);
 
-        Brands = new List<Name>()
+        Brands = new List<Brand>()
         {
             Apple,
             McDonalds

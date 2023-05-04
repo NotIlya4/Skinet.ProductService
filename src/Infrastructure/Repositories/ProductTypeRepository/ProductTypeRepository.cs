@@ -17,13 +17,13 @@ public class ProductTypeRepository : IProductTypeRepository
         _dbContext = dbContext;
     }
 
-    public async Task<List<Name>> Get()
+    public async Task<List<ProductType>> Get()
     {
         List<ProductTypeData> productTypeDatas = await _dbContext.ProductTypes.OrderBy(pt => pt.Name).ToListAsync();
         return _mapper.MapProductType(productTypeDatas);
     }
 
-    public async Task Add(Name productType)
+    public async Task Add(ProductType productType)
     {
         ProductTypeData productTypeData = _mapper.MapProductType(0, productType);
         _dbContext.SetEntry(productTypeData);
@@ -32,7 +32,7 @@ public class ProductTypeRepository : IProductTypeRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task Delete(Name productType)
+    public async Task Delete(ProductType productType)
     {
         ProductTypeData productTypeData = await _dbContext.GetProductType(productType);
         _dbContext.ProductTypes.Remove(productTypeData);

@@ -2,7 +2,7 @@
 using Infrastructure.FilteringSystem.Product;
 using Infrastructure.SortingSystem.Product;
 
-namespace Infrastructure.ProductService;
+namespace Infrastructure.ProductService.Views;
 
 public class GetProductsRequest
 {

@@ -2,7 +2,7 @@
 using Domain.Primitives;
 using Infrastructure.FilteringSystem;
 using Infrastructure.FilteringSystem.Product;
-using Infrastructure.ProductService;
+using Infrastructure.ProductService.Views;
 using Infrastructure.Repositories.ProductRepository;
 using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Product;

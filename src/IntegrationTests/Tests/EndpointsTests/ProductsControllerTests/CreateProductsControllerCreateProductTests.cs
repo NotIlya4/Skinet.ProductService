@@ -1,5 +1,4 @@
-﻿using Api.Controllers.ProductsControllers.Views;
-using IntegrationTests.Clients;
+﻿using IntegrationTests.Clients;
 using IntegrationTests.Extensions;
 using Newtonsoft.Json.Linq;
 

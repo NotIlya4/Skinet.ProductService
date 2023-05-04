@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 using Infrastructure.FilteringSystem.Product;
-using Infrastructure.ProductService;
+using Infrastructure.ProductService.Views;
 using Infrastructure.Repositories.ProductRepository;
 using IntegrationTests.EntityLists;
 using Microsoft.Extensions.DependencyInjection;
