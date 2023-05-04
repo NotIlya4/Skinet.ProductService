@@ -1,7 +1,6 @@
-﻿using Api.ProducesAttributes.ExceptionViews;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Api.ProducesAttributes;
+namespace Api.Swagger.ProducesAttributes.ProducesEntityNotFound;
 
 public class ProducesEntityNotFoundAttribute : ProducesResponseTypeAttribute
 {

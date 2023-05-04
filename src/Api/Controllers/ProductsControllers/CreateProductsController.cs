@@ -1,6 +1,8 @@
 ﻿using Api.Controllers.ProductsControllers.Helpers;
 using Api.Controllers.ProductsControllers.Views;
-using Api.ProducesAttributes;
+using Api.Swagger.ProducesAttributes;
+using Api.Swagger.ProducesAttributes.ProducesInternalException;
+using Api.Swagger.ProducesAttributes.ProducesValidationException;
 using Domain.Entities;
 using Infrastructure.ProductService;
 using Infrastructure.ProductService.Views;
@@ -12,6 +14,8 @@ namespace Api.Controllers.ProductsControllers;
 [Route("products")]
 [ApiController]
 [ProducesInternalException]
+[ProducesValidationException]
+[ProducesOk]
 public class CreateProductsController : ControllerBase
 {
     private readonly IProductService _productService;
@@ -24,7 +28,6 @@ public class CreateProductsController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesOk]
     public async Task<ActionResult<ProductView>> CreateProduct(CreateProductRequestView requestView)
     {
         CreateProductRequest request = _mapper.MapCreateProductRequest(requestView);

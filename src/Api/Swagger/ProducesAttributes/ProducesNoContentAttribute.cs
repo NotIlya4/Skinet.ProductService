@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Api.ProducesAttributes;
+namespace Api.Swagger.ProducesAttributes;
 
 public class ProducesNoContentAttribute : ProducesResponseTypeAttribute
 {

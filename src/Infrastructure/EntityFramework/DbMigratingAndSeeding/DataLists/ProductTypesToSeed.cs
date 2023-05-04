@@ -12,10 +12,10 @@ public class ProductTypesToSeed
 
     public ProductTypesToSeed()
     {
-        Pants = MakeProductType(1, "Pants");
-        Shoes = MakeProductType(2, "Shoes");
-        Tshirt = MakeProductType(3, "T-Shirt");
-        Watches = MakeProductType(4, "Watches");
+        Pants = MakeProductType(0, "Pants");
+        Shoes = MakeProductType(0, "Shoes");
+        Tshirt = MakeProductType(0, "T-Shirt");
+        Watches = MakeProductType(0, "Watches");
         ProductTypeDatas = new List<ProductTypeData>() { Pants, Shoes, Tshirt, Watches };
     }
 

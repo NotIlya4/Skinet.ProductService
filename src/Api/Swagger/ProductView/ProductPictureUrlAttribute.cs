@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using SwaggerEnrichers.CreateCustomEnrichers;
 
-namespace Api.SwaggerEnrichers.ProductView;
+namespace Api.Swagger.ProductView;
 
 public class ProductPictureUrlAttribute : EnricherBaseAttribute, ISchemaEnricher
 {

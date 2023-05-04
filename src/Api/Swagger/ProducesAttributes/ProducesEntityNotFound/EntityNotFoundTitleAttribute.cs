@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using SwaggerEnrichers.CreateCustomEnrichers;
 
-namespace Api.SwaggerEnrichers.EntityNotFoundExceptionView;
+namespace Api.Swagger.ProducesAttributes.ProducesEntityNotFound;
 
 public class EntityNotFoundTitleAttribute : EnricherBaseAttribute, ISchemaEnricher
 {

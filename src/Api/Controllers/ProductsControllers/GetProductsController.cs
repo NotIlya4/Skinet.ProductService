@@ -1,6 +1,9 @@
 using Api.Controllers.ProductsControllers.Helpers;
 using Api.Controllers.ProductsControllers.Views;
-using Api.ProducesAttributes;
+using Api.Swagger.ProducesAttributes;
+using Api.Swagger.ProducesAttributes.ProducesEntityNotFound;
+using Api.Swagger.ProducesAttributes.ProducesInternalException;
+using Api.Swagger.ProducesAttributes.ProducesValidationException;
 using Domain.Entities;
 using Infrastructure.FilteringSystem.Product;
 using Infrastructure.ProductService;
@@ -13,6 +16,8 @@ namespace Api.Controllers.ProductsControllers;
 [Route("products")]
 [ApiController]
 [ProducesInternalException]
+[ProducesOk]
+[ProducesValidationException]
 public class GetProductsController : ControllerBase
 {
     private readonly IProductService _productService;
@@ -25,7 +30,6 @@ public class GetProductsController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesOk]
     public async Task<ActionResult<GetProductsResultView>> GetProducts([FromQuery] GetProductsRequestView requestView)
     {
         GetProductsRequest request = _mapper.MapGetProductsRequest(requestView);
@@ -37,7 +41,6 @@ public class GetProductsController : ControllerBase
 
     [HttpGet]
     [Route("id/{id}")]
-    [ProducesOk]
     [ProducesEntityNotFound]
     public async Task<ActionResult<ProductView>> GetProductById(string id)
     {
@@ -49,7 +52,6 @@ public class GetProductsController : ControllerBase
     
     [HttpGet]
     [Route("name/{name}")]
-    [ProducesOk]
     [ProducesEntityNotFound]
     public async Task<ActionResult<ProductView>> GetProductByName(string name)
     {

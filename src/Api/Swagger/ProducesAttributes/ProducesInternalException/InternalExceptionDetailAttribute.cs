@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using SwaggerEnrichers.CreateCustomEnrichers;
 
-namespace Api.SwaggerEnrichers.InternalExceptionView;
+namespace Api.Swagger.ProducesAttributes.ProducesInternalException;
 
 public class InternalExceptionDetailAttribute : EnricherBaseAttribute, ISchemaEnricher
 {

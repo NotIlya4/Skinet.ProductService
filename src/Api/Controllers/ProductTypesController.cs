@@ -1,4 +1,6 @@
-﻿using Api.ProducesAttributes;
+﻿using Api.Swagger.ProducesAttributes;
+using Api.Swagger.ProducesAttributes.ProducesInternalException;
+using Api.Swagger.ProducesAttributes.ProducesValidationException;
 using Domain.Primitives;
 using Infrastructure.Repositories.ProductTypeRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +31,7 @@ public class ProductTypesController : ControllerBase
     [HttpPost]
     [Route("{productType}")]
     [ProducesNoContent]
+    [ProducesValidationException]
     public async Task<ActionResult> Add(string productType)
     {
         await _productTypeRepository.Add(new ProductType(productType));
@@ -38,6 +41,7 @@ public class ProductTypesController : ControllerBase
     [HttpDelete]
     [Route("{productType}")]
     [ProducesNoContent]
+    [ProducesValidationException]
     public async Task<ActionResult> Delete(string productType)
     {
         await _productTypeRepository.Delete(new ProductType(productType));

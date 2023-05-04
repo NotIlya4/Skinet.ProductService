@@ -1,6 +1,4 @@
-﻿using Api.SwaggerEnrichers.InternalExceptionView;
-
-namespace Api.ProducesAttributes.ExceptionViews;
+﻿namespace Api.Swagger.ProducesAttributes.ProducesInternalException;
 
 public class InternalExceptionView
 {

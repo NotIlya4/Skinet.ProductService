@@ -1,4 +1,4 @@
-﻿using Api.SwaggerEnrichers.ProductView;
+﻿using Api.Swagger.ProductView;
 
 namespace Api.Controllers.ProductsControllers.Views;
 

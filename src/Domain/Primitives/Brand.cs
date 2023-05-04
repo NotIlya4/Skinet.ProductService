@@ -6,7 +6,7 @@ public record Brand
 {
     public string Value { get; }
 
-    public Brand(string? value)
+    public Brand(string value)
     {
         DomainValidationException.EnsureNotEmpty(value, nameof(Name));
 

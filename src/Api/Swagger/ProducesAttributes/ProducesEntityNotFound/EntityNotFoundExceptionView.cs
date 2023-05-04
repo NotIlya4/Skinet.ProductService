@@ -1,6 +1,4 @@
-﻿using Api.SwaggerEnrichers.EntityNotFoundExceptionView;
-
-namespace Api.ProducesAttributes.ExceptionViews;
+﻿namespace Api.Swagger.ProducesAttributes.ProducesEntityNotFound;
 
 public class EntityNotFoundExceptionView
 {

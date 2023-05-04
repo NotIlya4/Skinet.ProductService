@@ -14,12 +14,12 @@ public class BrandsToSeed
 
     public BrandsToSeed()
     {
-        Apple = new BrandData(1, "Apple");
-        Converse = new BrandData(2, "Converse");
-        Fitwear = new BrandData(3, "Fitwear");
-        Flexpants = new BrandData(4, "Flexpants");
-        Gildan = new BrandData(5, "Gildan");
-        Hanes = new BrandData(6, "Hanes");
+        Apple = new BrandData(0, "Apple");
+        Converse = new BrandData(0, "Converse");
+        Fitwear = new BrandData(0, "Fitwear");
+        Flexpants = new BrandData(0, "Flexpants");
+        Gildan = new BrandData(0, "Gildan");
+        Hanes = new BrandData(0, "Hanes");
         BrandDatas = new List<BrandData>() { Apple, Converse, Fitwear, Flexpants, Gildan, Hanes };
     }
 }

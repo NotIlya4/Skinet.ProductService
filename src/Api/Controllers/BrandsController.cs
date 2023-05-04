@@ -1,4 +1,6 @@
-﻿using Api.ProducesAttributes;
+﻿using Api.Swagger.ProducesAttributes;
+using Api.Swagger.ProducesAttributes.ProducesInternalException;
+using Api.Swagger.ProducesAttributes.ProducesValidationException;
 using Domain.Primitives;
 using Infrastructure.Repositories.BrandRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +31,7 @@ public class BrandsController : ControllerBase
     [HttpPost]
     [Route("{brand}")]
     [ProducesNoContent]
+    [ProducesValidationException]
     public async Task<ActionResult> Add(string brand)
     {
         await _brandRepository.Add(new Brand(brand));
@@ -38,6 +41,7 @@ public class BrandsController : ControllerBase
     [HttpDelete]
     [Route("{brand}")]
     [ProducesNoContent]
+    [ProducesValidationException]
     public async Task<ActionResult> Delete(string brand)
     {
         await _brandRepository.Delete(new Brand(brand));

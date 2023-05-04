@@ -6,7 +6,7 @@ public record ProductType
 {
     public string Value { get; }
 
-    public ProductType(string? value)
+    public ProductType(string value)
     {
         DomainValidationException.EnsureNotEmpty(value, nameof(ProductType));
 

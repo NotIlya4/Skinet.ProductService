@@ -2,12 +2,12 @@
 using Microsoft.OpenApi.Models;
 using SwaggerEnrichers.CreateCustomEnrichers;
 
-namespace Api.SwaggerEnrichers.ProductView;
+namespace Api.Swagger.ProductView;
 
-public class ProductPriceAttribute : EnricherBaseAttribute, ISchemaEnricher
+public class ProductNameAttribute : EnricherBaseAttribute, ISchemaEnricher
 {
     public void Enrich(OpenApiSchema schema)
     {
-        schema.Example = new OpenApiFloat(149.99f);
+        schema.Example = new OpenApiString("Airpods");
     }
 }
