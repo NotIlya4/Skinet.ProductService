@@ -11,6 +11,8 @@ using Infrastructure.Repositories.Exceptions;
 using Infrastructure.Repositories.ProductRepository;
 using Infrastructure.Repositories.ProductTypeRepository;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Events;
 using SwaggerEnrichers.Extensions;
 
 namespace Api.Extensions;
@@ -77,5 +79,19 @@ public static class DiExtensions
             options.AddEnricherFilters();
             options.EnableAnnotations();
         });
+    }
+
+    public static void AddSerilog(this WebApplicationBuilder builder, string seqUrl)
+    {
+        builder.Services.AddHttpContextAccessor();
+        Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(builder.Configuration)
+            .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+            .Enrich.FromLogContext()
+            .Enrich.WithCorrelationIdHeader("x-request-id")
+            .WriteTo.Console()
+            .WriteTo.Seq(seqUrl)
+            .CreateLogger();
+        builder.Host.UseSerilog();
     }
 }

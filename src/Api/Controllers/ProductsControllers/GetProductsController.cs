@@ -22,11 +22,13 @@ public class GetProductsController : ControllerBase
 {
     private readonly IProductService _productService;
     private readonly ViewMapper _mapper;
+    private readonly ILogger<GetProductsController> _logger;
 
-    public GetProductsController(IProductService productService, ViewMapper mapper)
+    public GetProductsController(IProductService productService, ViewMapper mapper, ILogger<GetProductsController> logger)
     {
         _productService = productService;
         _mapper = mapper;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -35,7 +37,7 @@ public class GetProductsController : ControllerBase
         GetProductsRequest request = _mapper.MapGetProductsRequest(requestView);
         GetProductsResult result = await _productService.GetProducts(request);
         GetProductsResultView resultView = _mapper.MapGetProductsResult(result);
-        
+
         return Ok(resultView);
     }
 

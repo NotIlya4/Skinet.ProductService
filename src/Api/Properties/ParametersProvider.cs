@@ -25,4 +25,9 @@ public class ParametersProvider
     {
         return _config.GetRequiredValue<bool>("AutoSeed");
     }
+
+    public string SeqUrl()
+    {
+        return _config.GetRequiredValue("SeqUrl");
+    }
 }
