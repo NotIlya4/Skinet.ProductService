@@ -22,13 +22,11 @@ public class GetProductsController : ControllerBase
 {
     private readonly IProductService _productService;
     private readonly ViewMapper _mapper;
-    private readonly ILogger<GetProductsController> _logger;
 
-    public GetProductsController(IProductService productService, ViewMapper mapper, ILogger<GetProductsController> logger)
+    public GetProductsController(IProductService productService, ViewMapper mapper)
     {
         _productService = productService;
         _mapper = mapper;
-        _logger = logger;
     }
 
     [HttpGet]

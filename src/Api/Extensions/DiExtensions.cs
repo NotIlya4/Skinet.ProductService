@@ -91,6 +91,7 @@ public static class DiExtensions
             .Enrich.WithCorrelationIdHeader("x-request-id")
             .WriteTo.Console()
             .WriteTo.Seq(seqUrl)
+            .Enrich.WithProperty("ServiceName", "ProductService")
             .CreateLogger();
         builder.Host.UseSerilog();
     }

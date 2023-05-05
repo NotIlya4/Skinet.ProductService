@@ -2,16 +2,20 @@
 using Infrastructure.FilteringSystem.Product;
 using Infrastructure.ProductService.Views;
 using Infrastructure.Repositories.ProductRepository;
+using Microsoft.Extensions.Logging;
+using Serilog.Context;
 
 namespace Infrastructure.ProductService;
 
 public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
+    private readonly ILogger<ProductService> _logger;
 
-    public ProductService(IProductRepository productRepository)
+    public ProductService(IProductRepository productRepository, ILogger<ProductService> logger)
     {
         _productRepository = productRepository;
+        _logger = logger;
     }
 
     public async Task<Product> GetProduct(ProductStrictFilter filter)
@@ -31,12 +35,20 @@ public class ProductService : IProductService
             brand: request.Brand);
 
         await _productRepository.Insert(product);
+        using (LogContext.PushProperty("Product", product))
+        {
+            _logger.LogInformation("New product {ProductName} created", product.Name.Value);
+        }
 
         return product;
     }
 
     public async Task DeleteProduct(ProductStrictFilter filter)
     {
+        using (LogContext.PushProperty("Filter", filter))
+        {
+            _logger.LogInformation("Product with {Property} {Value} has been deleted", filter.PropertyName, filter.Value);
+        }
         await _productRepository.Delete(filter);
     }
 
