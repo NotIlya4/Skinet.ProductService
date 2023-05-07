@@ -5,6 +5,10 @@ on:
     branches:
     paths:
       - src/**
+  pull_request:
+    branches:
+    paths:
+      - src/**
 
 env:
   SA_PASSWORD: 1tsJusT@S@mpleP@ssword!

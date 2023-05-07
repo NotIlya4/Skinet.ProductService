@@ -5,6 +5,10 @@ on:
     branches:
     paths:
       - src/**
+  pull_request:
+    branches:
+    paths:
+      - src/**
 
 jobs:
   run_unit_tests:
