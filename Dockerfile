@@ -20,8 +20,8 @@ RUN dotnet ef migrations bundle --verbose -o /src/migrations-bundle
 
 # Build
 WORKDIR /src/Api
-RUN dotnet build "Api.csproj" -c Release -o /app/build
-RUN dotnet publish "Api.csproj" -c Release -o /app/publish
+RUN dotnet build "Api.csproj" -c Release -o /app/build --no-restore
+RUN dotnet publish "Api.csproj" -c Release -o /app/publish --no-restore
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 EXPOSE 80

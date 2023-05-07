@@ -4,7 +4,17 @@ namespace Domain.Exceptions;
 
 public class DomainValidationException : Exception
 {
+    public DomainValidationException()
+    {
+        
+    }
+    
     public DomainValidationException(string msg) : base(msg)
+    {
+        
+    }
+
+    public DomainValidationException(string msg, Exception innerException) : base(msg, innerException)
     {
         
     }
