@@ -11,23 +11,11 @@ public class ParametersProvider
         _config = config;
     }
     
-    public string GetSqlServer()
-    {
-        return _config.GetSqlServerConnectionString("SqlServer");
-    }
+    public string SqlServer => _config.GetSqlServerConnectionString("SqlServer");
 
-    public bool AutoMigrate()
-    {
-        return _config.GetRequiredValue<bool>("AutoMigrate");
-    }
+    public bool AutoMigrate => _config.GetRequiredValue<bool>("AutoMigrate");
 
-    public bool AutoSeed()
-    {
-        return _config.GetRequiredValue<bool>("AutoSeed");
-    }
+    public bool AutoSeed => _config.GetRequiredValue<bool>("AutoSeed");
 
-    public string SeqUrl()
-    {
-        return _config.GetRequiredValue("SeqUrl");
-    }
+    public string Seq => _config.GetRequiredValue("SeqUrl");
 }

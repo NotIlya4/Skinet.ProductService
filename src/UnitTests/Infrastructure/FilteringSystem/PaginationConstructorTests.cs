@@ -1,6 +1,6 @@
 ﻿using Infrastructure.FilteringSystem;
 
-namespace UnitTests.FilteringSystem;
+namespace UnitTests.Infrastructure.FilteringSystem;
 
 public class PaginationConstructorTests
 {

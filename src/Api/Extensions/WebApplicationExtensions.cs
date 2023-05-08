@@ -6,20 +6,15 @@ namespace Api.Extensions;
 
 public static class WebApplicationExtensions
 {
-    public static void UseConfiguredCors(this WebApplication applicationBuilder)
-    {
-        applicationBuilder.UseCors("All");
-    }
-
     public static async Task ConfigureDb(this WebApplication applicationBuilder, ParametersProvider parameters)
     {
-        if (parameters.AutoMigrate())
+        if (parameters.AutoMigrate)
         {
             DbMigrator migrator = new(applicationBuilder.Services);
             await migrator.Migrate();
         }
 
-        if (parameters.AutoSeed())
+        if (parameters.AutoSeed)
         {
             DbSeeder seeder = new(applicationBuilder.Services, new BrandsToSeed().BrandDatas,
                 new ProductTypesToSeed().ProductTypeDatas, new ProductsToSeed().ProductDatas);

@@ -2,7 +2,7 @@
 using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Product;
 
-namespace UnitTests;
+namespace UnitTests.Infrastructure;
 
 public class SortingInfoParserTests
 {

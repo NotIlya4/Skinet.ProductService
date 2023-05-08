@@ -41,19 +41,6 @@ public static class DiExtensions
         });
     }
 
-    public static void AddConfiguredCors(this IServiceCollection services)
-    {
-        services.AddCors(options =>
-        {
-            options.AddPolicy("All", policyBuilder =>
-            {
-                policyBuilder.AllowAnyHeader();
-                policyBuilder.AllowAnyMethod();
-                policyBuilder.AllowAnyOrigin();
-            });
-        });
-    }
-
     public static void AddConfiguredExceptionCatcherMiddlewareServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddExceptionCatcherMiddlewareServices(optionsBuilder =>

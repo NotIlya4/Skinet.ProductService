@@ -2,7 +2,7 @@
 using Infrastructure.SortingSystem;
 using Infrastructure.SortingSystem.Product;
 
-namespace UnitTests.SortingSystem;
+namespace UnitTests.Infrastructure.SortingSystem;
 
 public class ProductSortingCollectionConstructorTests
 {

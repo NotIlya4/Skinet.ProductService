@@ -1,21 +1,19 @@
 using Api.Extensions;
 using Api.Properties;
 using ExceptionCatcherMiddleware.Extensions;
-using Infrastructure.FilteringSystem.Product;
 using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 IServiceCollection services = builder.Services;
 ParametersProvider parametersProvider = new(builder.Configuration);
 
-builder.AddSerilog(parametersProvider.SeqUrl());
+builder.AddSerilog(parametersProvider.Seq);
 services.AddServices();
 services.AddRepositories();
 services.AddMappers();
-services.AddAppDbContext(parametersProvider.GetSqlServer());
+services.AddAppDbContext(parametersProvider.SqlServer);
 services.AddConfiguredExceptionCatcherMiddlewareServices();
 services.AddConfiguredSwaggerGen();
-services.AddConfiguredCors();
 
 services.AddControllers();
 services.AddEndpointsApiExplorer();
@@ -26,7 +24,6 @@ await app.ConfigureDb(parametersProvider);
 
 app.UseSerilogRequestLogging();
 app.UseExceptionCatcherMiddleware();
-app.UseConfiguredCors();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
