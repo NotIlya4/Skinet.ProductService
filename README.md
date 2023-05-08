@@ -1,17 +1,15 @@
-﻿# Skinet.ProductService
-This is a REST API Service that provides information about products. In the future, I plan to add RabbitMQ messages to the service.
+﻿# ProductService
+This is a REST API Service that provides CRUD endpoints for managing products, brands, and product types.
 
-## Environment
-The service has several environment files, including `appsettings.json`, `appsettings.DockerCompose.json`, and `appsettings.IntegrationTests.json`. These files are used to provide different connection strings based on the environment.
+## Environment Variables
+Service contains two environment variables that you can change to control its behavior:
+- `AutoMigrate`: When set to `true`, the service will automatically apply any necessary database migrations on startup. When set to `false`, you must apply the migrations manually.
+- `AutoSeed`: When set to `true`, the service will automatically seed the database with sample data on startup.
 
-When the environment name is not `DockerCompose` or `IntegrationTests`, the service uses `appsettings.json` and localhost as the default connection string. When the environment is `DockerCompose`, the service uses `sql-server`. When the environment is `IntegrationTests`, the service uses `localhost` and a `ProductServiceIntegrationTests` db.
+By default, both of these variables are set to `true`.
 
-Additionally, the service has two environment variables: `AutoMigrate` and `AutoSeed`. These variables control whether the service should apply migrations or seed the database with sample data at startup.
-
-## Migrations
-
-To apply migrations, set `AutoMigrate=true` in the Docker Compose environment. You can also apply migrations manually by running the EF migrations bundle, which is located in the `app/` container's directory. To do this, run the command 
+## Database Migrations
+You can apply migrations manually. Container contains entity framework migrations bundle at `/app/efbundle`. You can either run script `ApplyMigrations.py` or command yourself:
 ```
-docker exec -it product-service /app/migrations-bundle
+docker exec -it product-service /app/efbundle
 ```
-or run the Python script.
